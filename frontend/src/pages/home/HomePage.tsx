@@ -1,5 +1,5 @@
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import Container from "../../components/Container";
 import PostPreviewList from "./components/PostPreviewList";
 import './HomePage.css'

@@ -22,12 +22,14 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .text-logo {
+  user-select: none;
   font-weight: bold;
   text-decoration: overline;
 }
 
 .circle-logo {
   left: 0;
+  user-select: none;
   position: absolute;
   background: black;
   width: 4rem;
