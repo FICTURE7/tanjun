@@ -5,6 +5,7 @@ import Footer from "../../components/Footer";
 import PostHeader from "./components/PostHeader";
 import PostBody from "./components/PostBody";
 import PostFooter from "./components/PostFooter";
+import Avatar from "../../components/Avatar";
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
@@ -29,6 +30,30 @@ const PostPage: React.FC = () => {
         </PostBody>
         <PostFooter name={"username"} src={"https://placehold.co/150"} />
       </Card>
+
+      <div style={{marginBottom: "1rem", marginTop: "5rem"}}>
+        <Card>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Avatar src='https://placehold.co/150' />
+            <div style={{ marginLeft: '1rem' }}>
+              <h3 style={{ margin: '0', fontSize: '0.9rem' }}>username</h3>
+              <p style={{ margin: '0', fontSize: '0.9rem' }}>some comment</p>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      <div style={{marginBottom: "1rem"}}>
+        <Card>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Avatar src='https://placehold.co/150' />
+            <div style={{ marginLeft: '1rem' }}>
+              <h3 style={{ margin: '0', fontSize: '0.9rem' }}>username</h3>
+              <p style={{ margin: '0', fontSize: '0.9rem' }}>some comment</p>
+            </div>
+          </div>
+        </Card>
+      </div>
 
       <Footer />
     </Container>

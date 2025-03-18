@@ -10,8 +10,8 @@ const PostFooter: React.FC<PostFooterProps> = ({ name, src }) => {
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <Avatar src={src} />
       <div style={{ marginLeft: '1rem' }}>
-        <h3 style={{ margin: '0', fontSize: '0.9rem' }}>Author</h3>
-        <p style={{ margin: '0', fontSize: '0.9rem' }}>{name}</p>
+        <h3 style={{ margin: '0', fontSize: '0.9rem' }}>{name}</h3>
+        <p style={{ margin: '0', fontSize: '0.9rem' }}>created at 19/03/2025</p>
       </div>
     </div>
   )

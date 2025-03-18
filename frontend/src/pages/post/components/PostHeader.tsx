@@ -8,7 +8,7 @@ export interface PostHeaderProps {
 const PostHeader: React.FC<PostHeaderProps> = ({ title }) => {
   return (
     <div>
-      <h2 className='post-title'>{title}</h2>
+      <h1 className='post-title'>{title}</h1>
     </div>
   );
 }
