@@ -41,15 +41,36 @@ const posts = [
   },
 ];
 
+const Header: React.FC = () => {
+  return (<h1 className='title'>tanjun</h1>);
+}
+
+const Footer: React.FC = () => {
+  return (
+    <div className='footer'>
+      <p className='tanjun'>tanjun</p>
+      <ul className='footer-links'>
+        <li><a href='/about'>About Us</a></li>
+        <li><a href='/contact'>Contact</a></li>
+        <li><a href='/privacy'>Privacy Policy</a></li>
+        <li><a href='/terms'>Terms of Service</a></li>
+      </ul>
+    </div>
+  )
+}
+
 const Home: React.FC = () => {
   return (
-    <div>
-      <h1 className='title'>tanjun</h1>
+    <>
+      <Header />
 
+      {/* TODO: Create a PostCardList component. */}
       <ul className='post-list'>
         {posts.map(post => <li><Post key={post.id} post={post} /></li>)}
       </ul>
-    </div>
+
+      <Footer />
+    </>
   )
 }
 
