@@ -1,6 +1,6 @@
-import { User } from "./User";
+import User from "./User";
 
-export interface PostComment {
+export default interface PostComment {
   id: number;
   author: User;
   content: string;

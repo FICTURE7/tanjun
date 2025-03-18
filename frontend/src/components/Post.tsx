@@ -1,14 +1,15 @@
+import type Post from '../models/Post';
 import './Post.module.css'
 
 export interface PostProps {
-  model?: any;
+  post: Post;
 }
 
-const Post: React.FC<PostProps> = () => {
+const Post: React.FC<PostProps> = ({ post }) => {
   return (
     <div>
-      <h1>Post</h1>
-      <p>Content Post</p>
+      <h1>{post.title}</h1>
+      <p>{post.content}</p>
     </div>
   );
 }
