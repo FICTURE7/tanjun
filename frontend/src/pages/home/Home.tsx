@@ -1,7 +1,7 @@
-import PostPreview from "./components/PostPreview"
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Container from "./components/Container";
+import PostPreviewList from "./components/PostPreviewList";
 import './Home.css'
 
 // TODO: Fetch this from the API.
@@ -48,12 +48,7 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Header />
-
-      {/* TODO: Create a PostCardList component. */}
-      <ul className='post-list'>
-        {posts.map(post => <li><PostPreview key={post.id} post={post} /></li>)}
-      </ul>
-
+      <PostPreviewList posts={posts} />
       <Footer />
     </Container>
   )

@@ -1,5 +1,6 @@
 import Post from "../../../models/Post";
 import PostPreview from "./PostPreview";
+import './PostPreviewList.css';
 
 export interface PostPreviewListProps {
   posts: Post[];
