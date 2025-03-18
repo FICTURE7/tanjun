@@ -1,11 +1,8 @@
-import Container from './components/base/Container'
-import Home from './pages/Home'
+import Home from './pages/home/Home'
 
 function App() {
   return (
-    <Container>
-      <Home />
-    </Container>
+    <Home />
   )
 }
 

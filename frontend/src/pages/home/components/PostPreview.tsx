@@ -1,11 +1,11 @@
-import type Post from '../models/Post';
-import './PostCard.css'
+import type Post from '../../../models/Post';
+import './PostPreview.css'
 
 export interface PostProps {
   post: Post;
 }
 
-const Post: React.FC<PostProps> = ({ post }) => {
+const PostPreview: React.FC<PostProps> = ({ post }) => {
   return (
     <div className='card'>
       <h2 className='card-title'>{post.title}</h2>
@@ -15,4 +15,4 @@ const Post: React.FC<PostProps> = ({ post }) => {
   );
 }
 
-export default Post;
+export default PostPreview;
