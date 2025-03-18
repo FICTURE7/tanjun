@@ -1,0 +1,17 @@
+.card {
+  color: white;
+  background: black;
+  border-radius: 1rem;
+  padding: 1.2rem;
+}
+
+.card-title {
+  text-transform: lowercase;
+}
+
+.card-link {
+  display: block;
+  color: rgb(177, 214, 255);
+  text-decoration: none;
+  text-align: right;
+}

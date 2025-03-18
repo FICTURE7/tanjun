@@ -1,5 +1,7 @@
+import { Link } from 'react-router';
 import type Post from '../../../models/Post';
 import './PostPreview.css'
+import Card from '../../../components/Card';
 
 export interface PostProps {
   post: Post;
@@ -7,11 +9,11 @@ export interface PostProps {
 
 const PostPreview: React.FC<PostProps> = ({ post }) => {
   return (
-    <div className='card'>
+    <Card>
       <h2 className='card-title'>{post.title}</h2>
       <p>{post.content}</p>
-      <a className='card-link' href='#'>read more</a>
-    </div>
+      <Link className='card-link' to={`/post/${post.id}`}>read more</Link>
+    </Card>
   );
 }
 

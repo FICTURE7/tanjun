@@ -1,8 +1,8 @@
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Container from "./components/Container";
+import Container from "../../components/Container";
 import PostPreviewList from "./components/PostPreviewList";
-import './Home.css'
+import './HomePage.css'
 
 // TODO: Fetch this from the API.
 const posts = [
