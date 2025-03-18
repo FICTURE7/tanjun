@@ -1,5 +1,5 @@
 import type Post from '../models/Post';
-import './Post.module.css'
+import './PostCard.css'
 
 export interface PostProps {
   post: Post;
@@ -7,9 +7,10 @@ export interface PostProps {
 
 const Post: React.FC<PostProps> = ({ post }) => {
   return (
-    <div>
-      <h1>{post.title}</h1>
+    <div className='card'>
+      <h2 className='card-title'>{post.title}</h2>
       <p>{post.content}</p>
+      <a className='card-link' href='#'>read more</a>
     </div>
   );
 }

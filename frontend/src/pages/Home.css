@@ -1,0 +1,16 @@
+.post-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-list li {
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 4rem;
+  text-align: center;
+  text-decoration: overline;
+  margin: 5rem 0;
+}
