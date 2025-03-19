@@ -20,8 +20,8 @@ pub mod post {
   }
 
   #[get("/<id>")]
-  pub fn retrieve(id: u64) -> Json<Post> {
-    Json(services::post::retrieve(id))
+  pub fn retrieve(id: u64) -> Option<Json<Post>> {
+    Some(Json(services::post::retrieve(id)?))
   }
 
   #[delete("/<id>")]

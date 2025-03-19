@@ -19,16 +19,16 @@ pub mod post {
     post
   }
 
-  pub fn retrieve(id: u64) -> Post {
-    crate::models::Post {
+  pub fn retrieve(id: u64) -> Option<Post> {
+    Some(Post {
       id: id,
       title: "Hello, world!".to_string(),
       content: "Hello, world!".to_string(),
-    }
+    })
   }
 
   pub fn delete(id: u64) -> Post {
-    crate::models::Post {
+    Post {
       id: id,
       title: "Hello, world!".to_string(),
       content: "Hello, world!".to_string(),
