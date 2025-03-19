@@ -1,11 +1,11 @@
 import { useParams } from "react-router";
 import Container from "../../components/Container";
 import Card from "../../components/Card";
+import Avatar from "../../components/Avatar";
 import Footer from "../../components/Footer";
 import PostHeader from "./components/PostHeader";
 import PostBody from "./components/PostBody";
 import PostFooter from "./components/PostFooter";
-import Avatar from "../../components/Avatar";
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
