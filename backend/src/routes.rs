@@ -1,54 +1,32 @@
 pub mod post {
   use rocket::Route;
   use rocket::serde::json::Json;
-
+  use crate::services;
   use crate::models::Post;
 
   #[get("/")]
   pub fn list() -> Json<Vec<Post>> {
-    Json(vec![
-      Post {
-        id: 1,
-        title: "Hello, world!".to_string(),
-        content: "Hello, world!".to_string(),
-      }
-    ])
+    Json(services::post::list())
   }
 
-  #[post("/")]
-  pub fn create() -> Json<Post> {
-    Json(Post {
-      id: 1,
-      title: "Hello, world!".to_string(),
-      content: "Hello, world!".to_string(),
-    })
+  #[post("/", data = "<post>")]
+  pub fn create(post: Json<Post>) -> Json<Post> {
+    Json(services::post::create(post.into_inner()))
   }
 
-  #[put("/<id>")]
-  pub fn update(id: u64) -> Json<Post> {
-    Json(Post {
-      id: id,
-      title: "Hello, world!".to_string(),
-      content: "Hello, world!".to_string(),
-    })
+  #[put("/<id>", data = "<post>")]
+  pub fn update(id: u64, post: Json<Post>) -> Json<Post> {
+    Json(services::post::update(id, post.into_inner()))
   }
 
   #[get("/<id>")]
   pub fn retrieve(id: u64) -> Json<Post> {
-    Json(Post {
-      id: id,
-      title: "Hello, world!".to_string(),
-      content: "Hello, world!".to_string(),
-    })
+    Json(services::post::retrieve(id))
   }
 
   #[delete("/<id>")]
   pub fn delete(id: u64) -> Json<Post> {
-    Json(Post {
-      id: id,
-      title: "Hello, world!".to_string(),
-      content: "Hello, world!".to_string(),
-    })
+    Json(services::post::delete(id))
   }
 
   pub fn routes() -> Vec<Route> {

@@ -2,6 +2,7 @@
 
 mod routes;
 mod models;
+mod services;
 
 #[launch]
 fn rocket() -> _ {
