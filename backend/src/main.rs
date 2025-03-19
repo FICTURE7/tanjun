@@ -6,9 +6,10 @@ mod services;
 mod database;
 
 use rocket::fairing::AdHoc;
-use rocket_db_pools::Database;
-use rocket_db_pools::sqlx;
+use rocket_db_pools::{sqlx, Database};
 use crate::database::Db;
+
+// TODO: Refactor this bit of code out to database.rs.
 
 #[launch]
 fn rocket() -> _ {
