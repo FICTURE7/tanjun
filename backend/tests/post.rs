@@ -24,8 +24,8 @@ fn test_create() {
 fn test_read() {
   let client = get_client();
   let response = create_post(&client);
-
   let id = get_json(response)["id"].as_i64().expect("valid id");
+
   let response = read_post(&client, id);
 
   assert_eq!(response.status(), Status::Ok);
@@ -41,11 +41,36 @@ fn test_read_not_exist() {
 }
 
 #[test]
+fn test_update() {
+  let client = get_client();
+  let response = create_post(&client);
+  let id = get_json(response)["id"].as_i64().expect("valid id");
+
+  let response = update_post(&client, id);
+
+  assert_eq!(response.status(), Status::Ok);
+
+  let json = get_json(response);
+  let title = json["title"].as_str().expect("valid title");
+
+  assert_eq!(title, "updated post title");
+}
+
+#[test]
+fn test_update_not_exist() {
+  let client = get_client();
+
+  let response = update_post(&client, 0);
+
+  assert_eq!(response.status(), Status::NotFound);
+}
+
+#[test]
 fn test_delete() {
   let client = get_client();
   let response = create_post(&client);
-
   let id = get_json(response)["id"].as_i64().expect("valid id");
+
   let response = delete_post(&client, id);
 
   assert_eq!(response.status(), Status::Ok);
@@ -70,6 +95,13 @@ fn create_post(client: &Client) -> LocalResponse {
 fn read_post(client: &Client, id: i64) -> LocalResponse {
   client
     .get(format!("/post/{}", id))
+    .dispatch()
+}
+
+fn update_post(client: &Client, id: i64) -> LocalResponse {
+  client
+    .put(format!("/post/{}", id))
+    .body(r#"{"title":"updated post title","content":"post content"}"#)
     .dispatch()
 }
 
