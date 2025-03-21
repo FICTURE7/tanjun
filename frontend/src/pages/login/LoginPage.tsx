@@ -41,7 +41,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <Container size="small">
-      <Header size="medium" />
+      <Header size="normal" />
 
       <Card>
         <h1>log in</h1>

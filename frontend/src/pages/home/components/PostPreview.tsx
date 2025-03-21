@@ -1,7 +1,9 @@
 import { Link } from 'react-router';
-import type Post from '../../../models/Post';
-import './PostPreview.css'
+
+import Post from '../../../models/Post';
 import Card from '../../../components/Card';
+
+import './PostPreview.css'
 
 export interface PostProps {
   post: Post;

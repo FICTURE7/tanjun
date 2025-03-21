@@ -3,7 +3,7 @@ import './Header.css';
 import { Link } from 'react-router';
 
 export interface HeaderProps {
-  size?: 'medium' | 'large';
+  size?: 'normal' | 'large';
 }
 
 const Header: React.FC<HeaderProps> = ({ size }) => {

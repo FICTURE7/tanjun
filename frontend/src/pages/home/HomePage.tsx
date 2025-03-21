@@ -13,7 +13,9 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Header />
+
       <PostPreviewList posts={posts} />
+
       <Footer />
     </Container>
   )

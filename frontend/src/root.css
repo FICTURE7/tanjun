@@ -10,7 +10,10 @@
   --t-red: #da4b4b;
   --t-blue: #b1d6ff;
   --t-blue-dark: #8ec3ff;
+
+  --t-black: #000000;
   --t-gray: #e2e2e2;
+  --t-white: #ffffff;
 
   --t-primary: var(--t-blue);
   --t-primary-dark: var(--t-blue-dark);

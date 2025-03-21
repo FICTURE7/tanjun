@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+
 import Container from "../../components/Container";
 import Card from "../../components/Card";
 import Avatar from "../../components/Avatar";

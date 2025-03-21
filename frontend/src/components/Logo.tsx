@@ -1,7 +1,7 @@
 import './Logo.css'
 
 export interface LogoProps {
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'normal' | 'large';
 }
 
 const Logo: React.FC<LogoProps> = ({ size }) => {
