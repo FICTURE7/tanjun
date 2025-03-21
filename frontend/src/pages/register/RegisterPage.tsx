@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import Container from "../../components/Container";
 import Footer from "../../components/Footer";
@@ -9,20 +9,22 @@ import Card from "../../components/Card";
 import useRegisterMutation from "../../hooks/useRegisterMutation";
 import TextField from "../../components/TextField";
 import Button from "../../components/Button";
+import Alert from "../../components/Alert";
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState('')
+  const [error, setError] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const registerMutation = useRegisterMutation()
+  const registerMutation = useRegisterMutation();
   const navigate = useNavigate();
 
   function handleSubmit(event: FormEvent): void {
     event.preventDefault();
 
     if (password != confirmPassword) {
-      alert('passwords do not match!');
+      setError('Password do not match')
       return;
     }
 
@@ -33,10 +35,9 @@ const LoginPage: React.FC = () => {
 
     const options = {
       onError: (error: any) => {
-        alert(`failed to register! ${error}`)
+        setError(error.message);
       },
-      onSuccess: (data: any) => {
-        alert('got the data! ' + JSON.stringify(data));
+      onSuccess: (_: any) => {
         navigate('/');
       }
     };
@@ -50,6 +51,14 @@ const LoginPage: React.FC = () => {
 
       <Card>
         <h1>register</h1>
+
+        {error && (
+          <div className="mb-3">
+            <Alert>
+              <span>{error}</span>
+            </Alert>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -89,7 +98,7 @@ const LoginPage: React.FC = () => {
           </div>
 
           <div className="text-small text-mute">
-            By clicking Register, you agree to the privacy policy.
+            By clicking Register, you agree to the <Link to='/privacy-policy'>privacy policy</Link>.
           </div>
         </form>
       </Card>

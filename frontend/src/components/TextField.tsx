@@ -21,7 +21,7 @@ const TextField: React.FC<TextFieldProps> = ({ type, label, value, required, onC
       <div className='text-field-label'>
         <label>
           {label}
-          {required ? <span style={{color: 'red'}}>*</span> : <></>}
+          {required ? <span className='text-field-label-required'>*</span> : <></>}
           </label>
       </div>
       <input className='text-field' type={type} value={value} onChange={handleChange} required={required} />

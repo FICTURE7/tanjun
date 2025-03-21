@@ -1,26 +1,31 @@
 .button {
-  background-color: rgb(177, 214, 255);
-  padding: calc(1rem - 2px);
+  padding: 1rem;
+
+  background-color: var(--t-primary);
+
   border-style: solid;
-  border-color: rgb(177, 214, 255);
+  border-color: var(--t-primary);
   border-width: 2px;
   border-radius: 10rem;
+
   cursor: pointer;
 }
 
+.button:hover {
+  border-color: var(--t-primary-dark);
+  background-color: var(--t-primary-dark);
+}
+
 .button.secondary {
+  padding: calc(1rem - 2px);
+  outline: 2px solid white;
+  border-color: inherit;
   background-color: white;
-  border-color: rgb(172, 172, 172);
 }
 
 .button.secondary:hover {
-  border-color: rgb(172, 172, 172);
-  background-color: rgb(172, 172, 172);
-}
-
-.button:hover {
-  border-color: rgb(142, 195, 255);;
-  background-color: rgb(142, 195, 255);;
+  outline-color: var(--t-secondary);
+  background-color: var(--t-secondary);
 }
 
 .button.full-width {

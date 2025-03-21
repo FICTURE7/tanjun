@@ -7,10 +7,12 @@ import Header from "../../components/Header";
 import Card from "../../components/Card";
 import TextField from "../../components/TextField";
 import Button from "../../components/Button";
+import Alert from "../../components/Alert";
 
 import useLoginMutation from "../../hooks/useLoginMutation";
 
 const LoginPage: React.FC = () => {
+  const [error, setError] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,11 +28,10 @@ const LoginPage: React.FC = () => {
     };
 
     const options = {
-      onError: (error: any) => {
-        alert(`failed to login! ${error}`)
+      onError: (error: Error) => {
+        setError(error.message);
       },
-      onSuccess: (data: any) => {
-        alert('got the data! ' + JSON.stringify(data));
+      onSuccess: (_) => {
         navigate('/');
       }
     };
@@ -44,6 +45,14 @@ const LoginPage: React.FC = () => {
 
       <Card>
         <h1>log in</h1>
+
+        {error && (
+          <div className="mb-3">
+            <Alert>
+              <span>{error}</span>
+            </Alert>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className='mb-4'>

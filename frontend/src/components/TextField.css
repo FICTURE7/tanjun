@@ -10,3 +10,7 @@
   font-size: 0.9rem;
   margin: 0 0 0.5rem 0;
 }
+
+.text-field-label-required {
+  color: var(--t-red);
+}

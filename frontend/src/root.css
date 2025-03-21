@@ -6,6 +6,15 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --t-red: #da4b4b;
+  --t-blue: #b1d6ff;
+  --t-blue-dark: #8ec3ff;
+  --t-gray: #e2e2e2;
+
+  --t-primary: var(--t-blue);
+  --t-primary-dark: var(--t-blue-dark);
+  --t-secondary: var(--t-gray);
 }
 
 * {
@@ -38,7 +47,11 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .text-small { font-size: 0.7rem; }
+
 .text-mute { opacity: 0.8; }
+.text-mute a {
+  color: inherit;
+}
 
 .mb-1 { margin-bottom: 0.25rem; }
 .mb-2 { margin-bottom: 0.50rem; }
