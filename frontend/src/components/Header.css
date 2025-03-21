@@ -6,3 +6,8 @@
 .header.medium {
   margin: 2.5rem 0;
 }
+
+.header a {
+  color: inherit;
+  text-decoration: inherit;
+}

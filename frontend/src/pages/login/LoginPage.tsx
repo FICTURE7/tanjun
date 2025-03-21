@@ -31,7 +31,7 @@ const LoginPage: React.FC = () => {
       onError: (error: Error) => {
         setError(error.message);
       },
-      onSuccess: (_) => {
+      onSuccess: () => {
         navigate('/');
       }
     };
@@ -49,6 +49,7 @@ const LoginPage: React.FC = () => {
         {error && (
           <div className="mb-3">
             <Alert>
+              <h3>errors</h3>
               <span>{error}</span>
             </Alert>
           </div>
