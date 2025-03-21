@@ -1,8 +1,8 @@
 .header {
   margin: 5rem 0;
+  text-align: center;
 }
 
-.header-title {
-  font-size: 4rem;
-  text-align: center;
+.header.medium {
+  margin: 2.5rem 0;
 }

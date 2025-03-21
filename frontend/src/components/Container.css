@@ -6,3 +6,7 @@
   max-width: 50rem;
   min-height: 100vh;
 }
+
+.container.small {
+  max-width: 23rem;
+}

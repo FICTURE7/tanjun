@@ -10,7 +10,7 @@ const posts = [
     id: 1,
     author: {
       id: 1,
-      name: 'test'
+      username: 'test'
     },
     title: "Post 1",
     content: "This is the first post. It contains some additional dummy content to make it more descriptive.",
@@ -22,25 +22,23 @@ const posts = [
     id: 2,
     author: {
       id: 1,
-      name: 'test'
+      username: 'test'
     },
     title: "Post 2",
     content: "This is the second post. Here's some more dummy content to make it stand out.",
     created_at: new Date(),
     updated_at: new Date(),
-    comments: []
   },
   {
     id: 3,
     author: {
       id: 1,
-      name: 'test'
+      username: 'test'
     },
     title: "Post 3",
     content: "This is the third post. Adding some extra dummy content to make it more engaging.",
     created_at: new Date(),
     updated_at: new Date(),
-    comments: []
   },
 ];
 

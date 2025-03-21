@@ -1,10 +1,15 @@
+import Logo from './Logo';
 import './Header.css';
 
-const Header: React.FC = () => {
+export interface HeaderProps {
+  size?: 'medium' | 'large';
+}
+
+const Header: React.FC<HeaderProps> = ({ size }) => {
   return (
-    <div className='header'>
-      <h1 className='header-title text-logo'>
-        tanjun
+    <div className={size ? `header ${size}` : 'header'}>
+      <h1>
+        <Logo size={size} />
       </h1>
     </div>
   );

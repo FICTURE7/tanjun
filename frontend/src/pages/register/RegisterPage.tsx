@@ -1,22 +1,28 @@
 import React, { FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 import Container from "../../components/Container";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Card from "../../components/Card";
 
-import useLoginMutation from "../../hooks/useLoginMutation";
+import useRegisterMutation from "../../hooks/useRegisterMutation";
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
+  const registerMutation = useRegisterMutation()
   const navigate = useNavigate();
-  const loginMutation = useLoginMutation();
 
   function handleSubmit(event: FormEvent): void {
     event.preventDefault();
+
+    if (password != confirmPassword) {
+      alert('passwords do not match!');
+      return;
+    }
 
     const data = {
       username: username,
@@ -25,7 +31,7 @@ const LoginPage: React.FC = () => {
 
     const options = {
       onError: (error: any) => {
-        alert(`failed to login! ${error}`)
+        alert(`failed to register! ${error}`)
       },
       onSuccess: (data: any) => {
         alert('got the data! ' + JSON.stringify(data));
@@ -33,7 +39,7 @@ const LoginPage: React.FC = () => {
       }
     };
 
-    loginMutation.mutate(data, options);
+    registerMutation.mutate(data, options);
   }
 
   return (
@@ -53,16 +59,21 @@ const LoginPage: React.FC = () => {
           <label>Password</label>
           <div>
             <input
-              type="input"
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)} />
           </div>
 
+          <label>Confirm Password</label>
           <div>
-            <button type="submit">Login</button>
-            <Link to='/register'>
-              <button type="button">Register</button>
-            </Link>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)} />
+          </div>
+
+          <div>
+            <button type="submit">Register</button>
           </div>
         </form>
       </Card>
