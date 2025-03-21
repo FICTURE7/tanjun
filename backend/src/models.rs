@@ -11,6 +11,12 @@ pub struct RegisterUser {
   pub password: String,
 }
 
+#[derive(Clone, Debug, Deserialize)]
+pub struct LoginUser {
+  pub username: String,
+  pub password: String,
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Post {
   pub id: i64,
