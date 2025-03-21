@@ -5,14 +5,6 @@ use rocket::http::Status;
 use rocket::local::blocking::{Client, LocalResponse};
 
 #[test]
-fn test_list() {
-  let client = get_client();
-  let response = create_post(&client);
-
-  assert_eq!(response.status(), Status::Ok);
-}
-
-#[test]
 fn test_create() {
   let client = get_client();
   let response = create_post(&client);
@@ -27,6 +19,14 @@ fn test_read() {
   let id = get_json(response)["id"].as_i64().expect("valid id");
 
   let response = read_post(&client, id);
+
+  assert_eq!(response.status(), Status::Ok);
+}
+
+#[test]
+fn test_read_all() {
+  let client = get_client();
+  let response = create_post(&client);
 
   assert_eq!(response.status(), Status::Ok);
 }

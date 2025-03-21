@@ -19,11 +19,17 @@ pub fn rocket() -> _ {
       if let Some(db) = Db::fetch(&rocket) {
         sqlx::query(
           r#"
+          CREATE TABLE IF NOT EXISTS users (
+            id            INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            username      TEXT UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL
+          );
+
           CREATE TABLE IF NOT EXISTS posts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            title TEXT NOT NULL,
-            content TEXT NOT NULL
-          )
+            id            INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            title         TEXT NOT NULL,
+            content       TEXT NOT NULL
+          );
           "#)
           .execute(&**db)
           .await
@@ -34,4 +40,5 @@ pub fn rocket() -> _ {
       }
     }))
     .mount("/post", routes::post::routes())
+    .mount("/user", routes::user::routes())
 }

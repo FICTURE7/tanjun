@@ -27,14 +27,11 @@ pub async fn read(mut db: Connection<Db>, id: i64) -> Result<Option<Post>, Error
     .bind(&id)
     .fetch_optional(&mut **db)
     .await
-    .map(|row| {
-      println!("the row is {:?} {:?}", id, row.is_none());
-      row.map(|row| Post {
-        id: row.get(0),
-        title: row.get(1),
-        content: row.get(2),
-      })
-    })
+    .map(|row| row.map(|row| Post {
+      id: row.get(0),
+      title: row.get(1),
+      content: row.get(2),
+    }))
     .map_err(|e| Error::DatabaseError(e.to_string()))
 }
 
@@ -59,13 +56,11 @@ pub async fn update(mut db: Connection<Db>, id: i64, post: &UpdatePost) -> Resul
     .bind(&id)
     .fetch_optional(&mut **db)
     .await
-    .map(|row|{
-      row.map(|row| Post {
-        id: row.get(0),
-        title: row.get(1),
-        content: row.get(2),
-      })
-    })
+    .map(|row| row.map(|row| Post {
+      id: row.get(0),
+      title: row.get(1),
+      content: row.get(2),
+    }))
     .map_err(|e| Error::DatabaseError(e.to_string()))
 }
 
@@ -74,12 +69,10 @@ pub async fn delete(mut db: Connection<Db>, id: i64) -> Result<Option<Post>, Err
     .bind(&id)
     .fetch_optional(&mut **db)
     .await
-    .map(|row| {
-      row.map(|row| Post {
-        id: row.get(0),
-        title: row.get(1),
-        content: row.get(2),
-      })
-    })
+    .map(|row| row.map(|row| Post {
+      id: row.get(0),
+      title: row.get(1),
+      content: row.get(2),
+    }))
     .map_err(|e| Error::DatabaseError(e.to_string()))
 }
