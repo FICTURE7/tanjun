@@ -21,7 +21,7 @@ impl std::error::Error for Error {}
 
 impl<'r> Responder<'r, 'static> for Error {
   fn respond_to(self, _: &Request) -> Result<'static> {
-    // TODO: This should mask sensitive information.
+    // TODO: Provide useful information in debug mode.
     let json = json!({ "error": self.to_string() });
     let body = json.to_string();
 

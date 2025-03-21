@@ -6,7 +6,7 @@ pub struct User {
 }
 
 #[derive(Clone, Debug, Deserialize)]
-pub struct NewUser {
+pub struct RegisterUser {
   pub username: String,
   pub password: String,
 }

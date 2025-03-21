@@ -39,6 +39,6 @@ pub fn rocket() -> _ {
         Err(rocket)
       }
     }))
+    .mount("/auth", routes::auth::routes())
     .mount("/post", routes::post::routes())
-    .mount("/user", routes::user::routes())
 }

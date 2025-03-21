@@ -1,2 +1,5 @@
 [default.databases.tanjun]
 url = "tanjun.sqlite"
+
+[test.databases.tanjun]
+url = "tanjun-test.sqlite"

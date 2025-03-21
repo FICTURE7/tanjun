@@ -1,6 +1,13 @@
 use tanjun_backend;
+use std::fs::remove_file;
+use rocket::Config;
 use rocket::serde::json::serde_json;
 use rocket::local::blocking::{Client, LocalResponse};
+
+pub fn setup() {
+  let url: String = Config::figment().extract_inner("databases.tanjun.url").unwrap();
+  let _ = remove_file(url);
+}
 
 pub fn get_client() -> Client {
   Client::tracked(tanjun_backend::rocket()).expect("valid rocket instance")

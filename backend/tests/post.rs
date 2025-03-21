@@ -6,48 +6,71 @@ use rocket::local::blocking::{Client, LocalResponse};
 
 #[test]
 fn test_create() {
+  // Arrange
+  setup();
   let client = get_client();
+
+  // Act
   let response = create_post(&client);
 
+  // Assert
   assert_eq!(response.status(), Status::Ok);
 }
 
 #[test]
 fn test_read() {
+  // Arrange
+  setup();
   let client = get_client();
   let response = create_post(&client);
   let id = get_json(response)["id"].as_i64().expect("valid id");
 
+  // Act
   let response = read_post(&client, id);
 
+  // Assert
   assert_eq!(response.status(), Status::Ok);
 }
 
 #[test]
 fn test_read_all() {
+  // Arrange
+  setup();
   let client = get_client();
   let response = create_post(&client);
 
+  // Act
+  // TODO: Implement.
+
+  // Assert
   assert_eq!(response.status(), Status::Ok);
 }
 
 #[test]
 fn test_read_not_exist() {
+  // Arrange
+  setup();
   let client = get_client();
 
+  // Act
   let response = read_post(&client, 0);
 
+  // Assert
   assert_eq!(response.status(), Status::NotFound);
 }
 
 #[test]
 fn test_update() {
+  // Arrange
+  setup();
   let client = get_client();
   let response = create_post(&client);
   let id = get_json(response)["id"].as_i64().expect("valid id");
 
+  // Act
   let response = update_post(&client, id);
 
+  // Assert
   assert_eq!(response.status(), Status::Ok);
 
   let json = get_json(response);
@@ -58,30 +81,42 @@ fn test_update() {
 
 #[test]
 fn test_update_not_exist() {
+  // Arrange
+  setup();
   let client = get_client();
 
+  // Act
   let response = update_post(&client, 0);
 
+  // Assert
   assert_eq!(response.status(), Status::NotFound);
 }
 
 #[test]
 fn test_delete() {
+  // Arrange
+  setup();
   let client = get_client();
   let response = create_post(&client);
   let id = get_json(response)["id"].as_i64().expect("valid id");
 
+  // Act
   let response = delete_post(&client, id);
 
+  // Assert
   assert_eq!(response.status(), Status::Ok);
 }
 
 #[test]
 fn test_delete_not_exist() {
+  // Arrange
+  setup();
   let client = get_client();
 
+  // Act
   let response = delete_post(&client, 0);
 
+  // Assert
   assert_eq!(response.status(), Status::NotFound);
 }
 

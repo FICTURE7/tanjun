@@ -3,10 +3,10 @@ use rocket_db_pools::Connection;
 
 use crate::sqlx::{self, Row};
 use crate::database::Db;
-use crate::models::{User, NewUser};
+use crate::models::{User, RegisterUser};
 use crate::errors::Error;
 
-pub async fn create(mut db: Connection<Db>, user: &NewUser) -> Result<User, Error> {
+pub async fn register(mut db: Connection<Db>, user: &RegisterUser) -> Result<User, Error> {
   // TODO: Hash password.
   sqlx::query("INSERT INTO users (username, password_hash) VALUES (?, ?) RETURNING username")
     .bind(&user.username)
@@ -14,7 +14,7 @@ pub async fn create(mut db: Connection<Db>, user: &NewUser) -> Result<User, Erro
     .fetch_one(&mut **db)
     .await
     .map(|row| User {
-      username: row.get(1),
+      username: row.get(0),
     })
     .map_err(|e| Error::DatabaseError(e.to_string()))
 }
