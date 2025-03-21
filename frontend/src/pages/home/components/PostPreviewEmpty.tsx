@@ -5,9 +5,9 @@ const PostPreviewEmpty: React.FC = () => {
   return (
     <Card>
       <div className="text-center">
-        <h2 className='mb-6'>
+        <p className='font-bold text-2xl mb-6'>
           empty
-        </h2>
+        </p>
 
         <div className="mb-6">
           <BsBoxSeam className='inline' fontSize='8rem' />

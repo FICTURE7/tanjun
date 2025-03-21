@@ -1,5 +1,4 @@
 import React from "react";
-import './PostHeader.css'
 
 export interface PostHeaderProps {
   title: string
@@ -8,7 +7,7 @@ export interface PostHeaderProps {
 const PostHeader: React.FC<PostHeaderProps> = ({ title }) => {
   return (
     <div>
-      <h1 className='post-title'>{title}</h1>
+      <h1 className='font-bold text-3xl my-16'>{title}</h1>
     </div>
   );
 }

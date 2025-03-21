@@ -61,8 +61,8 @@ const LoginPage: React.FC = () => {
         )}
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <div className="mb-3">
+          <div className="mb-8">
+            <div className="mb-4">
               <TextField
                 type="input"
                 label="Username"
@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
                 required />
             </div>
 
-            <div className="mb-3">
+            <div className="mb-4">
               <TextField
                 type="password"
                 label="Password"
@@ -90,14 +90,14 @@ const LoginPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="mb-3">
+          <div className="mb-4">
             <Button
               type="submit"
               label="Register"
               fullWidth />
           </div>
 
-          <div className="text-small text-mute">
+          <div className="text-sm opacity-75">
             By clicking Register, you agree to the <Link to='/privacy-policy'>privacy policy</Link>.
           </div>
         </form>

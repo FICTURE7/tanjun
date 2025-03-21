@@ -12,7 +12,7 @@ const PostPreviewList: React.FC<PostPreviewListProps> = ({ posts }) => {
 
   return (
     <div>
-      <div className="mb-3">
+      <div className="mb-8">
         <Toolbar />
       </div>
 
