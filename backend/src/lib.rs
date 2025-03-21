@@ -1,5 +1,6 @@
 #[macro_use] extern crate rocket;
 
+mod cors;
 mod errors;
 mod routes;
 mod models;
@@ -8,6 +9,7 @@ mod database;
 
 use rocket::fairing::AdHoc;
 use rocket_db_pools::{sqlx, Database};
+use crate::cors::Cors;
 use crate::database::Db;
 
 // TODO: Refactor this bit of code out to database.rs.
@@ -15,6 +17,7 @@ use crate::database::Db;
 pub fn rocket() -> _ {
   rocket::build()
     .attach(Db::init())
+    .attach(Cors)
     .attach(AdHoc::try_on_ignite("Database Migrations", |rocket| async {
       if let Some(db) = Db::fetch(&rocket) {
         sqlx::query(
