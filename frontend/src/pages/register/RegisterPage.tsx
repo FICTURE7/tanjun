@@ -5,11 +5,11 @@ import Container from "../../components/Container";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Card from "../../components/Card";
-
-import useRegisterMutation from "../../hooks/useRegisterMutation";
 import TextField from "../../components/TextField";
 import Button from "../../components/Button";
 import Alert from "../../components/Alert";
+
+import useRegisterMutation from "../../hooks/useRegisterMutation";
 
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');

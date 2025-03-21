@@ -49,9 +49,8 @@ h1, h2, h3, h4, h5, h6, p {
 .text-small { font-size: 0.7rem; }
 
 .text-mute { opacity: 0.8; }
-.text-mute a {
-  color: inherit;
-}
+.text-mute a { color: inherit; }
+.text-center { text-align: center; }
 
 .mb-1 { margin-bottom: 0.25rem; }
 .mb-2 { margin-bottom: 0.50rem; }
