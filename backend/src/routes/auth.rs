@@ -10,15 +10,15 @@ use crate::models::{User, RegisterUser, LoginUser};
 type Result<T> = std::result::Result<T, Error>;
 
 #[post("/register", data = "<register>")]
-pub async fn register(conn: Connection<Db>, register: Json<RegisterUser>) -> Result<Json<User>> {
-  services::auth::register(conn, &register.into_inner())
+pub async fn register(mut conn: Connection<Db>, register: Json<RegisterUser>) -> Result<Json<User>> {
+  services::auth::register(&mut **conn, &register.into_inner())
     .await
     .map(|user| Json(user))
 }
 
 #[post("/login", data = "<login>")]
-pub async fn login(conn: Connection<Db>, login: Json<LoginUser>) -> Result<Json<User>> {
-  services::auth::login(conn, &login.into_inner())
+pub async fn login(mut conn: Connection<Db>, login: Json<LoginUser>) -> Result<Json<User>> {
+  services::auth::login(&mut **conn, &login.into_inner())
     .await
     .map(|user| Json(user))
 }

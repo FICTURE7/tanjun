@@ -27,6 +27,7 @@ fn test_register_already_exist() {
   // Arrange
   setup();
   let client = get_client();
+  let _ = register_user(&client);
 
   // Act
   let response = register_user(&client);

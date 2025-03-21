@@ -10,37 +10,37 @@ use crate::models::{Post, NewPost, UpdatePost};
 type Result<T> = std::result::Result<T, Error>;
 
 #[post("/", data = "<post>")]
-pub async fn create(conn: Connection<Db>, post: Json<NewPost>) -> Result<Json<Post>> {
-  services::post::create(conn, &post.into_inner())
+pub async fn create(mut conn: Connection<Db>, post: Json<NewPost>) -> Result<Json<Post>> {
+  services::post::create(&mut **conn, &post.into_inner())
     .await
     .map(|post| Json(post))
 }
 
 #[get("/<id>")]
-pub async fn read(conn: Connection<Db>, id: i64) -> Result<Option<Json<Post>>> {
-  services::post::read(conn, id)
+pub async fn read(mut conn: Connection<Db>, id: i64) -> Result<Option<Json<Post>>> {
+  services::post::read(&mut **conn, id)
     .await
     .map(|post| post.map(Json))
 }
 
 // TODO: Implement paging.
 #[get("/")]
-pub async fn read_paged(conn: Connection<Db>) -> Result<Json<Vec<Post>>> {
-  services::post::read_paged(conn)
+pub async fn read_paged(mut conn: Connection<Db>) -> Result<Json<Vec<Post>>> {
+  services::post::read_paged(&mut **conn)
     .await
     .map(|posts| Json(posts))
 }
 
 #[put("/<id>", data = "<post>")]
-pub async fn update(conn: Connection<Db>, id: i64, post: Json<UpdatePost>) -> Result<Option<Json<Post>>> {
-  services::post::update(conn, id, &post.into_inner())
+pub async fn update(mut conn: Connection<Db>, id: i64, post: Json<UpdatePost>) -> Result<Option<Json<Post>>> {
+  services::post::update(&mut conn, id, &post.into_inner())
     .await
     .map(|post| post.map(Json))
 }
 
 #[delete("/<id>")]
-pub async fn delete(conn: Connection<Db>, id: i64) -> Result<Option<Json<Post>>> {
-  services::post::delete(conn, id)
+pub async fn delete(mut conn: Connection<Db>, id: i64) -> Result<Option<Json<Post>>> {
+  services::post::delete(&mut conn, id)
     .await
     .map(|post| post.map(Json))
 }

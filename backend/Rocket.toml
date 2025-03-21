@@ -1,5 +1,12 @@
+# Default configuration
+
 [default.databases.tanjun]
 url = "tanjun.sqlite"
+
+# Test configuration
+
+[test]
+log_level = "debug"
 
 [test.databases.tanjun]
 url = "tanjun-test.sqlite"
