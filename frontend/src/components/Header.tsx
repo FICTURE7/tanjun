@@ -8,9 +8,9 @@ export interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ size }) => {
   return (
     <div className={size ? `header ${size}` : 'header'}>
-      <h1>
-        <Logo size={size} />
-      </h1>
+        <h1>
+          <Logo size={size} />
+        </h1>
     </div>
   );
 }

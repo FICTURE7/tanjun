@@ -1,0 +1,28 @@
+.button {
+  background-color: rgb(177, 214, 255);
+  padding: calc(1rem - 2px);
+  border-style: solid;
+  border-color: rgb(177, 214, 255);
+  border-width: 2px;
+  border-radius: 10rem;
+  cursor: pointer;
+}
+
+.button.secondary {
+  background-color: white;
+  border-color: rgb(172, 172, 172);
+}
+
+.button.secondary:hover {
+  border-color: rgb(172, 172, 172);
+  background-color: rgb(172, 172, 172);
+}
+
+.button:hover {
+  border-color: rgb(142, 195, 255);;
+  background-color: rgb(142, 195, 255);;
+}
+
+.button.full-width {
+  width: 100%;
+}

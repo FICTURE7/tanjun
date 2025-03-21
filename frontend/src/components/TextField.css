@@ -1,0 +1,12 @@
+.text-field {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 10rem;
+}
+
+.text-field-label {
+  text-transform: lowercase;
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+}

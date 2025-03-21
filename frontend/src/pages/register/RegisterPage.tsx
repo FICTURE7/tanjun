@@ -7,6 +7,8 @@ import Header from "../../components/Header";
 import Card from "../../components/Card";
 
 import useRegisterMutation from "../../hooks/useRegisterMutation";
+import TextField from "../../components/TextField";
+import Button from "../../components/Button";
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('')
@@ -47,33 +49,47 @@ const LoginPage: React.FC = () => {
       <Header size="medium" />
 
       <Card>
+        <h1>register</h1>
+
         <form onSubmit={handleSubmit}>
-          <label>Username</label>
-          <div>
-            <input
-              type="input"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)} />
+          <div className="mb-4">
+            <div className="mb-3">
+              <TextField
+                type="input"
+                label="Username"
+                value={username}
+                onChange={setUsername}
+                required />
+            </div>
+
+            <div className="mb-3">
+              <TextField
+                type="password"
+                label="Password"
+                value={password}
+                onChange={setPassword}
+                required />
+            </div>
+
+            <div>
+              <TextField
+                type="password"
+                label="Confirm Password"
+                value={confirmPassword}
+                onChange={setConfirmPassword}
+                required />
+            </div>
           </div>
 
-          <label>Password</label>
-          <div>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} />
+          <div className="mb-3">
+            <Button
+              type="submit"
+              label="Register"
+              fullWidth />
           </div>
 
-          <label>Confirm Password</label>
-          <div>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)} />
-          </div>
-
-          <div>
-            <button type="submit">Register</button>
+          <div className="text-small text-mute">
+            By clicking Register, you agree to the privacy policy.
           </div>
         </form>
       </Card>

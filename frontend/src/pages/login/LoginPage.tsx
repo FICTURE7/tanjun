@@ -5,6 +5,8 @@ import Container from "../../components/Container";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Card from "../../components/Card";
+import TextField from "../../components/TextField";
+import Button from "../../components/Button";
 
 import useLoginMutation from "../../hooks/useLoginMutation";
 
@@ -41,27 +43,43 @@ const LoginPage: React.FC = () => {
       <Header size="medium" />
 
       <Card>
+        <h1>log in</h1>
+
         <form onSubmit={handleSubmit}>
-          <label>Username</label>
-          <div>
-            <input
-              type="input"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)} />
+          <div className='mb-4'>
+            <div className='mb-3'>
+              <TextField
+                type='input'
+                label='Username'
+                value={username}
+                onChange={setUsername}
+                required />
+            </div>
+
+            <div>
+              <TextField
+                type='password'
+                label='Password'
+                value={password}
+                onChange={setPassword}
+                required />
+            </div>
           </div>
 
-          <label>Password</label>
-          <div>
-            <input
-              type="input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} />
+          <div className='mb-2'>
+            <Button
+              type='submit'
+              label='Login'
+              fullWidth />
           </div>
 
           <div>
-            <button type="submit">Login</button>
             <Link to='/register'>
-              <button type="button">Register</button>
+              <Button
+                type='button'
+                variant='secondary'
+                label='Register'
+                fullWidth />
             </Link>
           </div>
         </form>
