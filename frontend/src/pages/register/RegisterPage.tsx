@@ -50,7 +50,8 @@ const LoginPage: React.FC = () => {
       <Header size="normal" />
 
       <Card>
-        <h1 className="lowercase font-bold text-3xl mb-6">register</h1>
+        <h1 className="lowercase font-bold text-3xl mb-4">register</h1>
+        <p className="text-sm mb-6">Create an account and begin creating posts.</p>
 
         {error && (
           <div className="mb-3">
@@ -97,7 +98,7 @@ const LoginPage: React.FC = () => {
               fullWidth />
           </div>
 
-          <div className="text-sm opacity-75">
+          <div className="text-xs opacity-75">
             By clicking Register, you agree to the <Link to='/privacy-policy'>privacy policy</Link>.
           </div>
         </form>

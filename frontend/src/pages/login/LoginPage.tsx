@@ -44,7 +44,8 @@ const LoginPage: React.FC = () => {
       <Header size="normal" />
 
       <Card>
-        <h1 className="lowercase font-bold text-3xl mb-6">log in</h1>
+        <h1 className="lowercase font-bold text-3xl mb-4">log in</h1>
+        <p className="text-sm mb-6">Login and begin creating posts.</p>
 
         {error && (
           <div className="mb-3">
@@ -80,6 +81,14 @@ const LoginPage: React.FC = () => {
               type='submit'
               label='Login'
               fullWidth />
+          </div>
+
+          <div className="mt-8 mb-4">
+            <hr />
+          </div>
+
+          <div className="text-sm mb-4">
+            <p>Or register if you do not have an account.</p>
           </div>
 
           <div>
