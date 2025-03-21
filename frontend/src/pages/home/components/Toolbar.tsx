@@ -4,9 +4,9 @@ import ToolbarCreateButton from "./ToolbarCreateButton";
 
 const Toolbar: React.FC = () => {
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="flex">
       <ToolbarSearchField />
-      <div style={{ marginLeft: '1rem' }}>
+      <div className="ml-4">
         <ToolbarCreateButton />
       </div>
     </div>

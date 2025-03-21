@@ -50,7 +50,7 @@ const LoginPage: React.FC = () => {
       <Header size="normal" />
 
       <Card>
-        <h1>register</h1>
+        <h1 className="lowercase font-bold text-3xl mb-6">register</h1>
 
         {error && (
           <div className="mb-3">

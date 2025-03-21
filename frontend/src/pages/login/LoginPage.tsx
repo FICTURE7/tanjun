@@ -44,7 +44,7 @@ const LoginPage: React.FC = () => {
       <Header size="normal" />
 
       <Card>
-        <h1>log in</h1>
+        <h1 className="lowercase font-bold text-3xl mb-6">log in</h1>
 
         {error && (
           <div className="mb-3">
@@ -56,8 +56,8 @@ const LoginPage: React.FC = () => {
         )}
 
         <form onSubmit={handleSubmit}>
-          <div className='mb-4'>
-            <div className='mb-3'>
+          <div className='mb-8'>
+            <div className='mb-4'>
               <TextField
                 type='input'
                 label='Username'

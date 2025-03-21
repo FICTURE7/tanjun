@@ -1,8 +1,5 @@
 import { ChangeEvent } from "react";
 
-import '../../../components/TextField.css';
-import './ToolbarSearchField.css';
-
 export interface ToolbarSearchProps {
   value?: string;
   onChange?: (value: string) => void;
@@ -16,8 +13,8 @@ const ToolbarSearchField: React.FC<ToolbarSearchProps> = ({ value, onChange }) =
   }
 
   return (
-    <div style={{ flexGrow: '1' }}>
-      <input className='text-field search-field' type='input' placeholder='Search' value={value} onChange={handleChange} />
+    <div className='flex-grow-1'>
+      <input className='bg-white text-black w-full p-4 rounded-full border-2 text-xl h-16' type='input' placeholder='Search' value={value} onChange={handleChange} />
     </div>
   );
 }

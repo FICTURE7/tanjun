@@ -1,5 +1,4 @@
 import React from "react";
-import './Alert.css'
 
 export interface AlertProps {
   children?: React.ReactNode;
@@ -7,7 +6,7 @@ export interface AlertProps {
 
 const Alert: React.FC<AlertProps> = ({ children }) => {
   return (
-    <div className="alert">
+    <div className="rounded-2xl bg-red-400 p-2">
       {children}
     </div>
   )

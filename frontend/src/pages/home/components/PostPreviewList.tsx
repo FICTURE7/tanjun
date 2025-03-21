@@ -3,8 +3,6 @@ import PostPreview from "./PostPreview";
 import PostPreviewEmpty from "./PostPreviewEmpty";
 import Toolbar from "./Toolbar";
 
-import './PostPreviewList.css';
-
 export interface PostPreviewListProps {
   posts?: Post[];
 }
@@ -20,9 +18,9 @@ const PostPreviewList: React.FC<PostPreviewListProps> = ({ posts }) => {
 
       {posts.length === 0 && <PostPreviewEmpty />}
       {posts.length > 0 && (
-        <ul className='post-list'>
+        <ul className="p-0 m-0 list-none">
         {posts.map(post => (
-          <li>
+          <li className="mb-4">
             <PostPreview key={post.id} post={post} />
           </li>
         ))}

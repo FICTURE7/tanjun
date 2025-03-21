@@ -5,12 +5,12 @@ const PostPreviewEmpty: React.FC = () => {
   return (
     <Card>
       <div className="text-center">
-        <h2 className='mb-4'>
+        <h2 className='mb-6'>
           empty
         </h2>
 
-        <div className="mb-4">
-          <BsBoxSeam fontSize='8rem' />
+        <div className="mb-6">
+          <BsBoxSeam className='inline' fontSize='8rem' />
         </div>
 
         <p>Looks like there are no posts. Lets go create some!</p>

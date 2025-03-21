@@ -7,5 +7,6 @@
   min-height: 100vh;
 }
 
-.container.small { max-width: 27rem;
+.container.small {
+  max-width: 27rem;
 }

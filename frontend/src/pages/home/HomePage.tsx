@@ -5,8 +5,6 @@ import PostPreviewList from "./components/PostPreviewList";
 
 import usePostListQuery from "../../hooks/usePostListQuery";
 
-import './HomePage.css'
-
 const Home: React.FC = () => {
   const { data: posts } = usePostListQuery();
 

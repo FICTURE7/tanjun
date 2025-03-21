@@ -1,5 +1,3 @@
-import './Button.css';
-
 export interface ButtonProps {
   type?: 'submit' | 'button';
   variant?: 'primary' | 'secondary'
@@ -14,12 +12,12 @@ const Button: React.FC<ButtonProps> = ({ type, variant, label, fullWidth, onClic
       onClick();
   }
 
-  const classes = ['button'];
+  const classes = ['bg-sky-300 text-black p-4 rounded-full cursor-pointer'];
 
   if (variant === 'secondary')
-    classes.push('secondary');
+    classes.push('bg-white');
   if (fullWidth)
-    classes.push('full-width');
+    classes.push('w-100');
 
   return (
     <button className={classes.join(' ')} type={type} onClick={handleClick}>

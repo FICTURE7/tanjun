@@ -1,5 +1,4 @@
 import { ChangeEvent } from 'react';
-import './TextField.css'
 
 export interface TextFieldProps {
   type?: 'input' | 'password'
@@ -18,13 +17,13 @@ const TextField: React.FC<TextFieldProps> = ({ type, label, value, required, onC
 
   return (
     <div>
-      <div className='text-field-label'>
+      <div className='lowercase text-sm mb-2'>
         <label>
           {label}
-          {required ? <span className='text-field-label-required'>*</span> : <></>}
+          {required ? <span className='text-red-400'>*</span> : <></>}
           </label>
       </div>
-      <input className='text-field' type={type} value={value} onChange={handleChange} required={required} />
+      <input className='bg-white text-black w-100 p-4 rounded-full' type={type} value={value} onChange={handleChange} required={required} />
     </div>
   );
 }
