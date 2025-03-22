@@ -14,7 +14,7 @@ const ToolbarSearchField: React.FC<ToolbarSearchProps> = ({ value, onChange }) =
 
   return (
     <div className='flex-grow-1'>
-      <input className='bg-white text-black w-full p-4 rounded-full border-2 text-xl h-16' type='input' placeholder='Search' value={value} onChange={handleChange} />
+      <input className='bg-white text-black w-full py-4 px-6 rounded-full border-2 text-xl h-16' type='input' placeholder='Search' value={value} onChange={handleChange} />
     </div>
   );
 }
