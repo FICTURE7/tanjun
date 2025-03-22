@@ -10,9 +10,9 @@ export interface PostProps {
 const PostPreview: React.FC<PostProps> = ({ post }) => {
   return (
     <Card>
-      <h2 className='lowercase'>{post.title}</h2>
-      <p>{post.content}</p>
-      <Link className='lowercase text-sky-300' to={`/post/${post.id}`}>read more</Link>
+      <h2 className='lowercase font-bold text-xl mb-2'>{post.title}</h2>
+      <p className='mb-2'>{post.content}</p>
+      <Link className='block lowercase text-sky-300 hover:text-sky-400 text-right' to={`/post/${post.id}`}>read more</Link>
     </Card>
   );
 }

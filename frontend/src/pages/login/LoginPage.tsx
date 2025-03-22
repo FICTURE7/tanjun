@@ -29,10 +29,10 @@ const LoginPage: React.FC = () => {
     };
 
     const options = {
-      onError: (error: Error) => {
+      onError(error: Error) {
         setError(error.message);
       },
-      onSuccess: () => {
+      onSuccess() {
         navigate('/');
       }
     };

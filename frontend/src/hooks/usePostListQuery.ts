@@ -2,10 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Post from "../models/Post";
 
 async function postGetList(): Promise<Post[]> {
-  const response = await fetch('http://localhost:8000/post', {
-    method: 'GET',
-  });
-
+  const response = await fetch('http://localhost:8000/post', { method: 'GET' });
   const result = await response.json();
 
   if (!response.ok) {
@@ -15,11 +12,11 @@ async function postGetList(): Promise<Post[]> {
   return result;
 }
 
-export const POST_LIST = 'POST_LIST_KEY';
+export const POST_LIST_KEY = 'POST_LIST_KEY';
 
 export default function usePostListQuery() {
   return useQuery({
-    queryKey: [POST_LIST],
+    queryKey: [POST_LIST_KEY],
     queryFn: postGetList
   });
 }
