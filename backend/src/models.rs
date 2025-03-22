@@ -1,3 +1,4 @@
+use chrono::{DateTime, Utc};
 use rocket::serde::{Serialize, Deserialize};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -23,6 +24,8 @@ pub struct Post {
   pub id: i64,
   pub title: String,
   pub content: String,
+  pub created_at: DateTime<Utc>,
+  pub updated_at: Option<DateTime<Utc>>
 }
 
 #[derive(Clone, Debug, Deserialize)]

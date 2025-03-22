@@ -17,11 +17,11 @@ To run the tests, it is recommended to switch to the `test` profile by setting t
 
 On bash:
 ```bash
-ROCKET_PROFILE=test cargo test
+ROCKET_PROFILE=test cargo test -- --test-threads=1
 ```
 
 On batch:
 ```batch
 set ROCKET_PROFILE=test
-cargo test
+cargo test -- --test-threads=1
 ```

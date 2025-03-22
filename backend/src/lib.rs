@@ -37,6 +37,8 @@ pub fn rocket() -> _ {
             title         TEXT NOT NULL,
             content       TEXT NOT NULL,
             author_id     INTEGER NOT NULL,
+            created_at    DATETIME NOT NULL,
+            updated_at    DATETIME,
 			
             FOREIGN KEY (author_id) REFERENCES users(id)
           );
