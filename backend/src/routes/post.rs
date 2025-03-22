@@ -11,7 +11,7 @@ type Result<T> = std::result::Result<T, Error>;
 
 #[post("/", data = "<post>")]
 pub async fn create(mut conn: Connection<Db>, post: Json<NewPost>) -> Result<Json<Post>> {
-  services::post::create(&mut **conn, &post.into_inner())
+  services::post::create(&mut **conn, 1, &post.into_inner())
     .await
     .map(|post| Json(post))
 }

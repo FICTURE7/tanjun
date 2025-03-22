@@ -25,7 +25,8 @@ pub struct Post {
   pub title: String,
   pub content: String,
   pub created_at: DateTime<Utc>,
-  pub updated_at: Option<DateTime<Utc>>
+  pub updated_at: Option<DateTime<Utc>>,
+  pub author: User,
 }
 
 #[derive(Clone, Debug, Deserialize)]
