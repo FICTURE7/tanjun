@@ -13,9 +13,17 @@ const TextField: React.FC<TextFieldProps> = ({ type, value, onChange, ...rest })
       onChange(event.target.value);
   }
 
+  const classes = ['transition duration-300 text-black w-full p-4 rounded-full'];
+
+  if (rest.status === 'error') {
+    classes.push('bg-rose-50 outline-1 outline-offset-2 outline-rose-500');
+  } else {
+    classes.push('bg-white');
+  }
+
   return (
     <FormField {...rest}>
-      <input className='bg-white text-black w-full p-4 rounded-full' type={type} value={value} onChange={handleChange} required={rest.required} />
+      <input className={classes.join(' ')} type={type} value={value} onChange={handleChange} required={rest.required} />
     </FormField>
   );
 }

@@ -12,9 +12,17 @@ const TextArea: React.FC<TextAreaProps> = ({ value, onChange, ...rest }) => {
       onChange(event.target.value);
   }
 
+  const classes = ['transition duration-300 text-black w-full p-4 rounded-2xl'];
+
+  if (rest.status === 'error') {
+    classes.push('bg-rose-50 outline-1 outline-offset-2 outline-rose-500');
+  } else {
+    classes.push('bg-white');
+  }
+
   return (
     <FormField {...rest}>
-      <textarea className='bg-white text-black w-full p-4 rounded-2xl' value={value} onChange={handleChange} required={rest.required} />
+      <textarea className={classes.join(' ')} value={value} onChange={handleChange} required={rest.required} />
     </FormField>
   );
 }
