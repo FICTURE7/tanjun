@@ -7,9 +7,11 @@ import Post from "./components/Post";
 import PostNotFound from "./components/PostNotFound";
 
 import usePostQuery from "../../hooks/usePostQuery";
+import useToken from "../../hooks/useToken";
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
+  const token = useToken();
 
   let body = undefined;
 
@@ -17,7 +19,7 @@ const PostPage: React.FC = () => {
     const { data } = usePostQuery({ id: parseInt(id) });
 
     if (data) {
-      body = <Post post={data} />
+      body = <Post post={data} editable={!!token} />
     }
   }
 

@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 
 import Post from "../../models/Post";
 import Button from "../../components/Button";
@@ -12,13 +12,19 @@ import TextArea from "../../components/TextArea";
 import TextField from "../../components/TextField";
 
 import usePostCreateMutation from "../../hooks/usePostCreateMutation";
+import useToken from "../../hooks/useToken";
 
 const PostCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const navigate = useNavigate();
   const postCreateMutation = usePostCreateMutation();
+  const navigate = useNavigate();
+  const token = useToken();
+
+  if (!token) {
+    return <Navigate to="/login" replace />
+  }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

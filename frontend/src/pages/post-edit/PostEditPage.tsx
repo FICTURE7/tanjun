@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, Navigate, useNavigate, useParams } from "react-router";
 
 import Container from "../../components/Container";
 import Footer from "../../components/Footer";
@@ -12,6 +12,7 @@ import TextField from "../../components/TextField";
 
 import usePostQuery from "../../hooks/usePostQuery";
 import usePostEditMutation from "../../hooks/usePostEditMutation";
+import useToken from "../../hooks/useToken";
 
 const PostEditPage: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -28,6 +29,11 @@ const PostEditPage: React.FC = () => {
   const { data } = usePostQuery({ id: id });
   const { mutate: postEditMutate } = usePostEditMutation(id);
   const navigate = useNavigate();
+  const token = useToken();
+
+  if (!token) {
+    return <Navigate to="/login" replace />
+  }
 
   useEffect(() => {
     if (data) {

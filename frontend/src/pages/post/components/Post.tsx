@@ -5,12 +5,13 @@ import PostHeader from "./PostHeader";
 
 export interface PostProps {
   post: Post;
+  editable?: boolean;
 }
 
-const Post: React.FC<PostProps> = ({ post }) => {
+const Post: React.FC<PostProps> = ({ post, editable }) => {
   return (
     <div>
-      <PostHeader post={post} />
+      <PostHeader post={post} editable={editable}/>
       <Card>
         <div className="mb-8">
           <p>{post.content}</p>

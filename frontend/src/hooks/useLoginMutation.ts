@@ -27,6 +27,7 @@ async function authLogin(data: LoginData) {
 
 export default function useLoginMutation() {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: authLogin,
     onSuccess: (data: any) => {
