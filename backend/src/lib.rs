@@ -13,6 +13,7 @@ use crate::cors::Cors;
 use crate::database::Db;
 
 // TODO: Refactor this bit of code out to database.rs.
+// TODO: Implement migrations.
 #[launch]
 pub fn rocket() -> _ {
   rocket::build()
@@ -22,17 +23,26 @@ pub fn rocket() -> _ {
       if let Some(db) = Db::fetch(&rocket) {
         sqlx::query(
           r#"
-          CREATE TABLE IF NOT EXISTS users (
+          DROP TABLE IF EXISTS posts;
+          DROP TABLE IF EXISTS users;
+
+          CREATE TABLE users(
             id            INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             username      TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL
+            password_hash TEXT NOT NULL,
+            password_salt TEXT NOT NULL,
           );
 
-          CREATE TABLE IF NOT EXISTS posts (
+          CREATE TABLE posts(
             id            INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             title         TEXT NOT NULL,
-            content       TEXT NOT NULL
+            content       TEXT NOT NULL,
+            author_id     INTEGER NOT NULL,
+			
+            FOREIGN KEY (author_id) REFERENCES users(id)
           );
+
+          INSERT INTO users(username, password_hash) VALUES('admin', 'hash');
           "#)
           .execute(&**db)
           .await

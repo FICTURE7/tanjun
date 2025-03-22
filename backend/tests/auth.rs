@@ -1,14 +1,13 @@
 mod common;
 
-use common::*;
 use rocket::http::Status;
 use rocket::local::blocking::{Client, LocalResponse};
 
 #[test]
 fn test_register() {
   // Arrange
-  setup();
-  let client = get_client();
+  common::setup();
+  let client = common::get_client();
 
   // Act
   let response = register_user(&client);
@@ -16,7 +15,7 @@ fn test_register() {
   // Assert
   assert_eq!(response.status(), Status::Ok);
 
-  let json = get_json(response);
+  let json = common::get_json(response);
   let username = json["username"].as_str().expect("valid username");
 
   assert_eq!(username, "test_user");
@@ -25,8 +24,8 @@ fn test_register() {
 #[test]
 fn test_register_already_exist() {
   // Arrange
-  setup();
-  let client = get_client();
+  common::setup();
+  let client = common::get_client();
   let _ = register_user(&client);
 
   // Act

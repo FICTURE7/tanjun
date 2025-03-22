@@ -1,15 +1,17 @@
 // TODO: Implement a function to map the rows.
-// TODO: Implement paging.
 
 use crate::sqlx::{self, Row, SqliteConnection};
-use crate::database::Db;
 use crate::models::{Post, NewPost, UpdatePost};
 use crate::errors::Error;
 
 pub async fn create(conn: &mut SqliteConnection, post: &NewPost) -> Result<Post, Error> {
-  sqlx::query("INSERT INTO posts (title, content) VALUES (?, ?) RETURNING id, title, content")
+  sqlx::query(r#"
+    INSERT INTO posts (title, content, author_id) VALUES (?, ?, ?)
+    RETURNING id, title, content
+    "#)
     .bind(&post.title)
     .bind(&post.content)
+    .bind(1) // TODO: Remove hardcode.
     .fetch_one(conn)
     .await
     .map(|row| Post {
@@ -17,7 +19,7 @@ pub async fn create(conn: &mut SqliteConnection, post: &NewPost) -> Result<Post,
       title: row.get(1),
       content: row.get(2),
     })
-    .map_err(|e| Error::DatabaseError(e.to_string()))
+    .map_err(|e| Error::Database(e.to_string()))
 }
 
 pub async fn read(conn: &mut SqliteConnection, id: i64) -> Result<Option<Post>, Error> {
@@ -30,9 +32,10 @@ pub async fn read(conn: &mut SqliteConnection, id: i64) -> Result<Option<Post>, 
       title: row.get(1),
       content: row.get(2),
     }))
-    .map_err(|e| Error::DatabaseError(e.to_string()))
+    .map_err(|e| Error::Database(e.to_string()))
 }
 
+// TODO: Implement paging.
 pub async fn read_paged(conn: &mut SqliteConnection) -> Result<Vec<Post>, Error> {
   sqlx::query("SELECT id, title, content FROM posts")
     .fetch_all(conn)
@@ -44,7 +47,7 @@ pub async fn read_paged(conn: &mut SqliteConnection) -> Result<Vec<Post>, Error>
         content: row.get(2),
       }).collect()
     })
-    .map_err(|e| Error::DatabaseError(e.to_string()))
+    .map_err(|e| Error::Database(e.to_string()))
 }
 
 pub async fn update(conn: &mut SqliteConnection, id: i64, post: &UpdatePost) -> Result<Option<Post>, Error> {
@@ -59,7 +62,7 @@ pub async fn update(conn: &mut SqliteConnection, id: i64, post: &UpdatePost) -> 
       title: row.get(1),
       content: row.get(2),
     }))
-    .map_err(|e| Error::DatabaseError(e.to_string()))
+    .map_err(|e| Error::Database(e.to_string()))
 }
 
 pub async fn delete(conn: &mut SqliteConnection, id: i64) -> Result<Option<Post>, Error> {
@@ -72,5 +75,5 @@ pub async fn delete(conn: &mut SqliteConnection, id: i64) -> Result<Option<Post>
       title: row.get(1),
       content: row.get(2),
     }))
-    .map_err(|e| Error::DatabaseError(e.to_string()))
+    .map_err(|e| Error::Database(e.to_string()))
 }
