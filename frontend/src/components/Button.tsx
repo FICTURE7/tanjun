@@ -3,20 +3,21 @@ export interface ButtonProps {
   variant?: 'primary' | 'secondary';
   size?: 'normal' | 'large';
   label: string;
+  disabled?: boolean;
   fullWidth?: boolean;
   onClick?: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ type, variant, size, label, fullWidth, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ type, variant, size, label, disabled, fullWidth, onClick }) => {
   variant ??= 'primary';
   size ??= 'normal';
 
   const classes = ['text-black rounded-full cursor-pointer select-none'];
 
   if (variant === 'secondary')
-    classes.push('bg-white hover:bg-gray-200 active:bg-gray-300');
+    classes.push('bg-white hover:bg-gray-200 active:bg-gray-300 disabled:bg-gray-300');
   else if (variant === 'primary')
-    classes.push('bg-sky-300 hover:bg-sky-400 active:bg-sky-500');
+    classes.push('bg-sky-300 hover:bg-sky-400 active:bg-sky-500 disabled:bg-sky-400');
 
   if (size === 'normal')
     classes.push('py-2 px-4')
@@ -32,7 +33,11 @@ const Button: React.FC<ButtonProps> = ({ type, variant, size, label, fullWidth, 
   }
 
   return (
-    <button className={classes.join(' ')} type={type} onClick={handleClick}>
+    <button
+      className={classes.join(' ')}
+      type={type}
+      onClick={handleClick}
+      disabled={disabled}>
       {label}
     </button>
   );

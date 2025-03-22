@@ -7,10 +7,10 @@ import Header from "../../components/Header";
 import Card from "../../components/Card";
 import TextField from "../../components/TextField";
 import Button from "../../components/Button";
-import Alert from "../../components/Alert";
 
 import useLoginMutation from "../../hooks/useLoginMutation";
 import CardHeader from "../../components/CardHeader";
+import useToken from "../../hooks/useToken";
 
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
@@ -19,6 +19,9 @@ const LoginPage: React.FC = () => {
 
   const navigate = useNavigate();
   const loginMutation = useLoginMutation();
+  const token = useToken();
+
+  console.log(['token', token]);
 
   function handleSubmit(event: FormEvent): void {
     event.preventDefault();
@@ -47,15 +50,8 @@ const LoginPage: React.FC = () => {
       <Card>
         <CardHeader 
           title="Log In"
-          description="Login and begin creating posts."/>
-
-        {error && (
-          <div className="mb-3">
-            <Alert>
-              <span>{error}</span>
-            </Alert>
-          </div>
-        )}
+          description="Login and begin creating posts."
+          error={error} />
 
         <form onSubmit={handleSubmit}>
           <div className='mb-8'>
@@ -83,6 +79,7 @@ const LoginPage: React.FC = () => {
               type='submit'
               size='large'
               label='Login'
+              disabled={loginMutation.isPending}
               fullWidth />
           </div>
 

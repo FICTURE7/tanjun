@@ -8,7 +8,6 @@ import Card from "../../components/Card";
 import CardHeader from "../../components/CardHeader";
 import TextField from "../../components/TextField";
 import Button from "../../components/Button";
-import Alert from "../../components/Alert";
 
 import useRegisterMutation from "../../hooks/useRegisterMutation";
 
@@ -53,15 +52,8 @@ const LoginPage: React.FC = () => {
       <Card>
         <CardHeader 
           title="Register"
-          description="Create an account and begin creating posts."/>
-
-        {error && (
-          <div className="mb-3">
-            <Alert>
-              <span>{error}</span>
-            </Alert>
-          </div>
-        )}
+          description="Create an account and begin creating posts."
+          error={error} />
 
         <form onSubmit={handleSubmit}>
           <div className="mb-8">

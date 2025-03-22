@@ -17,7 +17,7 @@ async function postGet(data: PostData) {
   return mapPost(result);
 }
 
-export const POST_KEY = 'POST_KEY';
+export const POST_KEY = 'POST';
 
 export default function usePostQuery(data: PostData) {
   return useQuery({

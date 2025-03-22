@@ -1,4 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { TOKEN_KEY } from "./useToken";
 import { API_URL } from "../api";
 
 export interface LoginData {
@@ -25,7 +26,11 @@ async function authLogin(data: LoginData) {
 }
 
 export default function useLoginMutation() {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: authLogin
+    mutationFn: authLogin,
+    onSuccess: (data: any) => {
+      queryClient.setQueryData([TOKEN_KEY], data);
+    }
   });
 }

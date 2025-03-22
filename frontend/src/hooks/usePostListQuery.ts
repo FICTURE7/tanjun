@@ -13,7 +13,7 @@ async function postGetList() {
   return (result as any[]).map(mapPost);
 }
 
-export const POST_LIST_KEY = 'POST_LIST_KEY';
+export const POST_LIST_KEY = 'POST_LIST';
 
 export default function usePostListQuery() {
   return useQuery({
