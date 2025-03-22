@@ -25,7 +25,6 @@ pub async fn register(conn: &mut SqliteConnection, register: &RegisterUser) -> R
     })
 }
 
-#[allow(unused_variables)]
 pub async fn login(conn: &mut SqliteConnection, login: &LoginUser) -> Result<User, Error> {
   let row = sqlx::query("SELECT id, username, password_hash, password_salt FROM users WHERE username = ?")
     .bind(&login.username)
