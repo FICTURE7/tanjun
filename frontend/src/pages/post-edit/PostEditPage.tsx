@@ -1,3 +1,5 @@
+import { Link, useParams } from "react-router";
+
 import Container from "../../components/Container";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -8,6 +10,8 @@ import TextArea from "../../components/TextArea";
 import TextField from "../../components/TextField";
 
 const PostEditPage: React.FC = () => {
+  const { id } = useParams();
+
   return (
     <Container>
       <Header size="large" />
@@ -39,10 +43,12 @@ const PostEditPage: React.FC = () => {
                 label="Edit" />
             </div>
             <div className="inline">
-              <Button
-                type="button"
-                label="Cancel"
-                variant="secondary" />
+              <Link to={`/post/${id}`}>
+                <Button
+                  type="button"
+                  label="Cancel"
+                  variant="secondary" />
+              </Link>
             </div>
           </div>
         </form>

@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import { mapPost } from "../models/Post";
 
 export interface PostCreateData {
   title: string;
@@ -20,7 +21,7 @@ async function postCreate(data: PostCreateData) {
     throw new Error(result.error);
   }
 
-  return result;
+  return mapPost(result);
 }
 
 export default function usePostCreateMutation() {

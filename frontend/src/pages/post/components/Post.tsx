@@ -1,5 +1,6 @@
+import Card from "../../../components/Card";
 import type Post from "../../../models/Post";
-import PostBody from "./PostBody";
+import PostFooter from "./PostFooter";
 import PostHeader from "./PostHeader";
 
 export interface PostProps {
@@ -10,11 +11,17 @@ const Post: React.FC<PostProps> = ({ post }) => {
   return (
     <div>
       <PostHeader title={post.title} />
-      <PostBody>
-        <p>
-          {post.content}
-        </p>
-      </PostBody>
+      <Card>
+        <div className="mb-8">
+          <p>{post.content}</p>
+        </div>
+
+        <PostFooter
+          username={post.author.username}
+          createdAt={post.createdAt}
+          updatedAt={post.updatedAt}
+          src={"https://placehold.co/150"} />
+      </Card>
     </div>
   )
 }

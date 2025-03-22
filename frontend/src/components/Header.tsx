@@ -8,11 +8,11 @@ export interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ size }) => {
   return (
     <div className="my-16 text-center">
-        <h1>
-          <Link to="/">
-            <Logo size={size} />
-          </Link>
-        </h1>
+      <h1>
+        <Link to="/">
+          <Logo size={size} />
+        </Link>
+      </h1>
     </div>
   );
 }

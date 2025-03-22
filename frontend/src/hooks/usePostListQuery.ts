@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import Post from "../models/Post";
+import { mapPost } from "../models/Post";
 
-async function postGetList(): Promise<Post[]> {
+async function postGetList() {
   const response = await fetch('http://localhost:8000/post', { method: 'GET' });
   const result = await response.json();
 
@@ -9,7 +9,7 @@ async function postGetList(): Promise<Post[]> {
     throw new Error(result.error);
   }
 
-  return result;
+  return (result as any[]).map(mapPost);
 }
 
 export const POST_LIST_KEY = 'POST_LIST_KEY';

@@ -1,17 +1,29 @@
 import Avatar from "../../../components/Avatar"
 
 export interface PostFooterProps {
-  name: string
-  src: string
+  username: string;
+  createdAt: Date;
+  updatedAt?: Date;
+  src: string;
 }
 
-const PostFooter: React.FC<PostFooterProps> = ({ name, src }) => {
+function pad(num: number) {
+  return num.toString().padStart(2, '0');
+}
+
+function formatDate(date: Date) {
+  return `${date.getFullYear()}/${pad(date.getMonth() + 1)}/${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+const PostFooter: React.FC<PostFooterProps> = ({ username, createdAt, updatedAt, src }) => {
   return (
-    <div className="flex align-middle">
+    <div className="flex">
       <Avatar src={src} />
+
       <div className="ml-4">
-        <p className="text-sm">{name}</p>
-        <p className="text-sm">created at 19/03/2025</p>
+        <p className="font-bold mb-1">{username}</p>
+        <p className="text-xs text-gray-300">created at {formatDate(createdAt)}</p>
+        {updatedAt && <p className="text-xs text-gray-300">updated at {formatDate(createdAt)}</p>}
       </div>
     </div>
   )

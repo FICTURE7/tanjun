@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import Post from "../models/Post";
+import { mapPost } from "../models/Post";
 
 export interface PostData {
   id: number;
 }
 
-async function postGet(data: PostData): Promise<Post> {
+async function postGet(data: PostData) {
   const response = await fetch(`http://localhost:8000/post/${data.id}`, { method: 'GET' });
   const result = await response.json();
 
@@ -13,7 +13,7 @@ async function postGet(data: PostData): Promise<Post> {
     throw new Error(result.error);
   }
 
-  return result;
+  return mapPost(result);
 }
 
 export const POST_KEY = 'POST_KEY';

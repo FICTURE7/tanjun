@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import Post from "../../models/Post";
 import Button from "../../components/Button";
@@ -75,10 +75,12 @@ const PostCreatePage: React.FC = () => {
                 label="Create" />
             </div>
             <div className="inline">
-              <Button
-                type="button"
-                label="Cancel"
-                variant="secondary" />
+              <Link to="/">
+                <Button
+                  type="button"
+                  label="Cancel"
+                  variant="secondary" />
+              </Link>
             </div>
           </div>
         </form>
