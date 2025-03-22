@@ -6,7 +6,7 @@ const ToolbarCreateButton: React.FC = () => {
     <div>
       <Link to='/post/new'>
         <button className='h-16 w-16 bg-black hover:bg-gray-800 active:bg-gray-700 text-white rounded-full cursor-pointer'>
-          <BsPlusLg className='inline text-4xl' />
+          <BsPlusLg className='inline text-2xl' />
         </button>
       </Link>
     </div>
