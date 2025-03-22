@@ -23,7 +23,7 @@ const PostFooter: React.FC<PostFooterProps> = ({ username, createdAt, updatedAt,
       <div className="ml-4">
         <p className="font-bold mb-1">{username}</p>
         <p className="text-xs text-gray-300">created at {formatDate(createdAt)}</p>
-        {updatedAt && <p className="text-xs text-gray-300">updated at {formatDate(createdAt)}</p>}
+        {updatedAt && <p className="text-xs text-gray-300">updated at {formatDate(updatedAt)}</p>}
       </div>
     </div>
   )
