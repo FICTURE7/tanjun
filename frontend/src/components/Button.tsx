@@ -14,7 +14,7 @@ const Button: React.FC<ButtonProps> = ({ type, variant, size, label, fullWidth, 
   const classes = ['text-black rounded-full cursor-pointer select-none'];
 
   if (variant === 'secondary')
-    classes.push('bg-white hover:bg-gray-100 active:bg-gray-200');
+    classes.push('bg-white hover:bg-gray-200 active:bg-gray-300');
   else if (variant === 'primary')
     classes.push('bg-sky-300 hover:bg-sky-400 active:bg-sky-500');
 
