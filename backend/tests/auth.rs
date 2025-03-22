@@ -35,8 +35,58 @@ fn test_register_already_exist() {
   assert_eq!(response.status(), Status::Conflict);
 }
 
+#[test]
+fn test_login_valid_password() {
+  // Arrange
+  common::setup();
+  let client = common::get_client();
+  let _ = register_user(&client);
+
+  // Act
+  let response = login_user(&client);
+
+  // Assert
+  assert_eq!(response.status(), Status::Ok);
+
+}
+
+#[test]
+fn test_login_invalid_password() {
+  // Arrange
+  common::setup();
+  let client = common::get_client();
+  let _ = register_user(&client);
+
+  // Act
+  let response = client.post("/auth/login")
+    .body(r#"{"username":"test_user","password":"test-invalid-password"}"#) // Invalid password.
+    .dispatch();
+
+  // Assert
+  assert_eq!(response.status(), Status::Unauthorized);
+}
+
+#[test]
+fn test_login_invalid_user() {
+  // Arrange
+  common::setup();
+  let client = common::get_client();
+
+  // Act
+  let response = login_user(&client);
+
+  // Assert
+  assert_eq!(response.status(), Status::Unauthorized);
+}
+
 fn register_user(client: &Client) -> LocalResponse {
   client.post("/auth/register")
+    .body(r#"{"username":"test_user","password":"test"}"#)
+    .dispatch()
+}
+
+fn login_user(client: &Client) -> LocalResponse {
+  client.post("/auth/login")
     .body(r#"{"username":"test_user","password":"test"}"#)
     .dispatch()
 }

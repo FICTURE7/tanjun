@@ -29,8 +29,8 @@ pub fn rocket() -> _ {
           CREATE TABLE users(
             id            INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             username      TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL,
-            password_salt TEXT NOT NULL,
+            password_hash BINARY(32) NOT NULL,
+            password_salt BINARY(16) NOT NULL
           );
 
           CREATE TABLE posts(
@@ -42,7 +42,7 @@ pub fn rocket() -> _ {
             FOREIGN KEY (author_id) REFERENCES users(id)
           );
 
-          INSERT INTO users(username, password_hash) VALUES('admin', 'hash');
+          INSERT INTO users(username, password_hash, password_salt) VALUES('admin', 'hash', 'salt');
           "#)
           .execute(&**db)
           .await
