@@ -10,7 +10,7 @@ export interface PostProps {
 const Post: React.FC<PostProps> = ({ post }) => {
   return (
     <div>
-      <PostHeader title={post.title} />
+      <PostHeader post={post} />
       <Card>
         <div className="mb-8">
           <p>{post.content}</p>

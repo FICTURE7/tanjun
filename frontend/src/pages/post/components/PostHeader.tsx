@@ -1,13 +1,22 @@
 import React from "react";
+import { BsPencilSquare } from "react-icons/bs";
+import { Link } from "react-router";
+import Post from "../../../models/Post";
 
 export interface PostHeaderProps {
-  title: string
+  post: Post
 }
 
-const PostHeader: React.FC<PostHeaderProps> = ({ title }) => {
+const PostHeader: React.FC<PostHeaderProps> = ({ post }) => {
   return (
-    <div>
-      <h1 className='font-bold text-3xl mb-8 ms-5'>{title}</h1>
+    <div className="flex items-center ms-5 mb-8">
+      <h1 className='font-bold text-3xl flex-grow-1'>{post.title}</h1>
+
+      <Link to={`/post/edit/${post.id}`}>
+        <button className='h-16 w-16 bg-black hover:bg-gray-800 active:bg-gray-700 text-white rounded-full cursor-pointer'>
+          <BsPencilSquare className='inline text-2xl' />
+        </button>
+      </Link>
     </div>
   );
 }
