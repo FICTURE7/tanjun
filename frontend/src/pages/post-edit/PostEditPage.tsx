@@ -10,7 +10,7 @@ import TextField from "../../components/TextField";
 const PostEditPage: React.FC = () => {
   return (
     <Container>
-      <Header />
+      <Header size="large" />
 
       <Card>
         <CardHeader 

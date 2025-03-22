@@ -42,7 +42,7 @@ const PostCreatePage: React.FC = () => {
 
   return (
     <Container>
-      <Header />
+      <Header size="large" />
 
       <Card>
         <CardHeader 
