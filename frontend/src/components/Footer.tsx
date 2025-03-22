@@ -1,17 +1,17 @@
 import Logo from './Logo';
-import './Footer.css';
+import FooterLink from './FooterLink';
 
 const Footer: React.FC = () => {
   return (
-    <footer className='footer'>
-      <div>
-        <Logo size='small'/>
+    <footer className="mt-auto text-center text-sm p-5">
+      <div className="mb-3">
+        <Logo size="small" />
       </div>
 
-      <ul className='footer-links'>
-        <li><a href='/about'>About</a></li>
-        <li><a href='/privacy'>Privacy Policy</a></li>
-        <li><a href='/login'>Login</a></li>
+      <ul className="inline-flex gap-8">
+        <FooterLink to="/about" label="About" />
+        <FooterLink to="/privacy" label="Privacy" />
+        <FooterLink to="/login" label="login" />
       </ul>
     </footer>
   );

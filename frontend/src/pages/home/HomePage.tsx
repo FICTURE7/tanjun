@@ -10,7 +10,7 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <Header />
+      <Header size="large" />
 
       <PostPreviewList posts={posts} />
 

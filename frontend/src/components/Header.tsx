@@ -1,5 +1,4 @@
 import Logo from './Logo';
-import './Header.css';
 import { Link } from 'react-router';
 
 export interface HeaderProps {
@@ -8,9 +7,9 @@ export interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ size }) => {
   return (
-    <div className={size ? `header ${size}` : 'header'}>
+    <div className="my-16 text-center">
         <h1>
-          <Link to='/'>
+          <Link to="/">
             <Logo size={size} />
           </Link>
         </h1>
