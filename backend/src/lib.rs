@@ -12,8 +12,7 @@ use rocket_db_pools::{sqlx, Database};
 use crate::cors::Cors;
 use crate::database::Db;
 
-// TODO: Refactor this bit of code out to database.rs.
-// TODO: Implement migrations.
+// TODO: Remove this hardcoded sql query and implement migrations.
 #[launch]
 pub fn rocket() -> _ {
   rocket::build()

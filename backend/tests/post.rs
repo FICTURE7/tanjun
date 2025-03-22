@@ -37,13 +37,22 @@ fn test_read_all() {
   // Arrange
   setup();
   let client = get_client();
-  let response = create_post(&client);
+  for _ in 0..5 {
+    let response = create_post(&client);
+
+    assert_eq!(response.status(), Status::Ok);
+  }
 
   // Act
-  // TODO: Implement.
+  let response = read_paged_post(&client);
 
   // Assert
   assert_eq!(response.status(), Status::Ok);
+
+  let json = get_json(response);
+  let array = json.as_array().expect("valid array");
+
+  assert_eq!(array.len(), 5);
 }
 
 #[test]
@@ -130,6 +139,12 @@ fn create_post(client: &Client) -> LocalResponse {
 fn read_post(client: &Client, id: i64) -> LocalResponse {
   client
     .get(format!("/post/{}", id))
+    .dispatch()
+}
+
+fn read_paged_post(client: &Client) -> LocalResponse {
+  client
+    .get("/post")
     .dispatch()
 }
 
