@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { mapPost } from "../models/Post";
+import { API_URL } from "../api";
 
 async function postGetList() {
-  const response = await fetch('http://localhost:8000/post', { method: 'GET' });
+  const response = await fetch(`${API_URL}/post`, { method: 'GET' });
   const result = await response.json();
 
   if (!response.ok) {

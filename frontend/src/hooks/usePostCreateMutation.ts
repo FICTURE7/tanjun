@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { mapPost } from "../models/Post";
+import { API_URL } from "../api";
 
 export interface PostCreateData {
   title: string;
@@ -7,7 +8,7 @@ export interface PostCreateData {
 }
 
 async function postCreate(data: PostCreateData) {
-  const response = await fetch('http://localhost:8000/post', {
+  const response = await fetch(`${API_URL}/post`, {
     method: 'POST',
     body: JSON.stringify({
       title: data.title,

@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import { API_URL } from "../api";
 
 export interface LoginData {
   username: string;
@@ -6,7 +7,7 @@ export interface LoginData {
 }
 
 async function authLogin(data: LoginData) {
-  const response = await fetch('http://localhost:8000/auth/login', {
+  const response = await fetch(`${API_URL}/auth/login`, {
     method: 'POST',
     body: JSON.stringify({
       username: data.username,
