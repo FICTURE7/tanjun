@@ -7,11 +7,11 @@ export interface PostFooterProps {
 
 const PostFooter: React.FC<PostFooterProps> = ({ name, src }) => {
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div className="flex align-middle">
       <Avatar src={src} />
-      <div style={{ marginLeft: '1rem' }}>
-        <h3 style={{ margin: '0', fontSize: '0.9rem' }}>{name}</h3>
-        <p style={{ margin: '0', fontSize: '0.9rem' }}>created at 19/03/2025</p>
+      <div className="ml-4">
+        <p className="text-sm">{name}</p>
+        <p className="text-sm">created at 19/03/2025</p>
       </div>
     </div>
   )

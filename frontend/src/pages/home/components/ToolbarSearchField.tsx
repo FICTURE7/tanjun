@@ -13,7 +13,7 @@ const ToolbarSearchField: React.FC<ToolbarSearchProps> = ({ value, onChange }) =
   }
 
   return (
-    <div className='flex-grow-1'>
+    <div className='flex-grow-1 select-none'>
       <input className='bg-white text-black w-full py-4 px-6 rounded-full border-2 text-xl h-16' type='input' placeholder='Search' value={value} onChange={handleChange} />
     </div>
   );

@@ -10,6 +10,7 @@ import Button from "../../components/Button";
 import Alert from "../../components/Alert";
 
 import useLoginMutation from "../../hooks/useLoginMutation";
+import CardHeader from "../../components/CardHeader";
 
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
@@ -44,8 +45,9 @@ const LoginPage: React.FC = () => {
       <Header size="normal" />
 
       <Card>
-        <h1 className="lowercase font-bold text-3xl mb-4">log in</h1>
-        <p className="text-sm mb-6">Login and begin creating posts.</p>
+        <CardHeader 
+          title="Log In"
+          description="Login and begin creating posts."/>
 
         {error && (
           <div className="mb-3">
@@ -79,12 +81,13 @@ const LoginPage: React.FC = () => {
           <div className='mb-2'>
             <Button
               type='submit'
+              size='large'
               label='Login'
               fullWidth />
           </div>
 
           <div className="mt-8 mb-4">
-            <hr />
+            <hr className="opacity-50" />
           </div>
 
           <div className="text-sm mb-4">
@@ -96,6 +99,7 @@ const LoginPage: React.FC = () => {
               <Button
                 type='button'
                 variant='secondary'
+                size='large'
                 label='Register'
                 fullWidth />
             </Link>

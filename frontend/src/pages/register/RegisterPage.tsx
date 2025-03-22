@@ -5,6 +5,7 @@ import Container from "../../components/Container";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Card from "../../components/Card";
+import CardHeader from "../../components/CardHeader";
 import TextField from "../../components/TextField";
 import Button from "../../components/Button";
 import Alert from "../../components/Alert";
@@ -50,8 +51,9 @@ const LoginPage: React.FC = () => {
       <Header size="normal" />
 
       <Card>
-        <h1 className="lowercase font-bold text-3xl mb-4">register</h1>
-        <p className="text-sm mb-6">Create an account and begin creating posts.</p>
+        <CardHeader 
+          title="Register"
+          description="Create an account and begin creating posts."/>
 
         {error && (
           <div className="mb-3">
@@ -95,11 +97,12 @@ const LoginPage: React.FC = () => {
             <Button
               type="submit"
               label="Register"
+              size="large"
               fullWidth />
           </div>
 
           <div className="text-xs opacity-75">
-            By clicking Register, you agree to the <Link to='/privacy-policy'>privacy policy</Link>.
+            By clicking Register, you agree to the <Link className="underline" to="/privacy">privacy policy</Link>.
           </div>
         </form>
       </Card>
