@@ -20,7 +20,7 @@ const FormField: React.FC<FormFieldProps> = ({ label, required, helperLabel, chi
         {children}
       </div>
       {helperLabel && (
-        <p className="text-xs opacity-80 mt-2">{helperLabel}</p>
+        <p className="text-xs text-gray-300 mt-2">{helperLabel}</p>
       )}
     </div>
   );
