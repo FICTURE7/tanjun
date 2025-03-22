@@ -5,7 +5,7 @@ export interface PostData {
   id: number;
 }
 
-async function postGet(data: PostData): Promise<Post[]> {
+async function postGet(data: PostData): Promise<Post> {
   const response = await fetch(`http://localhost:8000/post/${data.id}`, { method: 'GET' });
   const result = await response.json();
 

@@ -3,31 +3,29 @@ import { useParams } from "react-router";
 import Container from "../../components/Container";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import PostHeader from "./components/PostHeader";
-import PostBody from "./components/PostBody";
+import Post from "./components/Post";
+import PostNotFound from "./components/PostNotFound";
+
+import usePostQuery from "../../hooks/usePostQuery";
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
+
+  let body = undefined;
+
+  if (id) {
+    const { data } = usePostQuery({ id: parseInt(id) });
+
+    if (data) {
+      body = <Post post={data} />
+    }
+  }
 
   return (
     <Container>
       <Header size="normal"/>
 
-      <PostHeader title={`post ${id}`} />
-      <PostBody>
-        <p>
-          {id}
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      </PostBody>
+      {body ?? <PostNotFound />}
 
       <Footer />
     </Container>
