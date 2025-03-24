@@ -9,9 +9,13 @@ pub struct User {
 
 #[derive(Debug, Validate, Deserialize)]
 pub struct RegisterUser {
-  #[validate(custom(function="validate_username"))]
+  #[validate(custom(
+    function="validate_username",
+    message="must be between 1 and 32 characters long and contain only alphanumeric characters and underscore (_)"))]
   pub username: String,
-  #[validate(custom(function="validate_password"))]
+  #[validate(custom(
+    function="validate_password",
+    message="must be between 8 and 32 characters long, contain an uppercase character, a lowercase character, a digit and a special character ('@', '$', '!', '%', '*', '?', '&')"))]
   pub password: String,
 }
 
@@ -25,6 +29,17 @@ pub struct LoginUser {
 pub struct AuthUser {
   pub user: User,
   pub token: String,
+}
+
+fn validate_username(username: &String) -> Result<(), ValidationError> {
+  let valid_length = username.len() >= 1 && username.len() <= 32;
+  let valid_chars  = username.chars().all(|c| c.is_alphanumeric() || c == '_');
+  
+  if valid_length && valid_chars {
+    Ok(())
+  } else {
+    Err(ValidationError::new("Username must be between 1 and 32 characters long and contain only alphanumeric characters and underscore (_)"))
+  }
 }
 
 fn validate_password(password: &String) -> Result<(), ValidationError> {
@@ -54,18 +69,7 @@ fn validate_password(password: &String) -> Result<(), ValidationError> {
   if valid_length && has_uppercase && has_lowercase && has_digit && has_special {
     Ok(())
   } else {
-    Err(ValidationError::new("Password must be between 8 and 32 characters long, contain an upper character, a lower character, a digit and a special character ('@', '$', '!', '%', '*', '?', '&')."))
-  }
-}
-
-fn validate_username(username: &String) -> Result<(), ValidationError> {
-  let valid_length = username.len() >= 1 && username.len() <= 32;
-  let valid_chars  = username.chars().all(|c| c.is_alphanumeric() || c == '_');
-  
-  if valid_length && valid_chars {
-    Ok(())
-  } else {
-    Err(ValidationError::new("Username must be between 1 and 32 characters long and contain only alphanumeric characters and underscore (_)."))
+    Err(ValidationError::new("Password must be between 8 and 32 characters long, contain an uppercase character, a lowercase character, a digit and a special character ('@', '$', '!', '%', '*', '?', '&')"))
   }
 }
 
