@@ -1,13 +1,15 @@
 import React, { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router";
 
-import Container from "../../components/Container";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import Card from "../../components/Card";
-import CardHeader from "../../components/CardHeader";
-import TextField from "../../components/TextField";
-import Button from "../../components/Button";
+import {
+  Button,
+  Card,
+  CardHeader,
+  Container,
+  Footer,
+  Header,
+  TextField
+} from "../../components";
 
 import { useRegisterMutation } from "../../hooks";
 

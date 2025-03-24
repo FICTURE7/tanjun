@@ -1,5 +1,5 @@
 import { BsBoxSeam } from "react-icons/bs";
-import Card from "../../../components/Card";
+import { Card } from "../../../components";
 
 const PostPreviewEmpty: React.FC = () => {
   return (

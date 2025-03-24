@@ -1,12 +1,10 @@
 import { useParams } from "react-router";
 
-import Container from "../../components/Container";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import { usePostQuery, useToken } from "../../hooks";
+import { Container, Footer, Header } from "../../components";
+
 import Post from "./components/Post";
 import PostNotFound from "./components/PostNotFound";
-
-import { usePostQuery, useToken } from "../../hooks";
 
 const PostPage: React.FC = () => {
   const { id } = useParams();

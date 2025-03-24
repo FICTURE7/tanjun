@@ -2,14 +2,17 @@ import { FormEvent, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router";
 
 import Post from "../../models/Post";
-import Button from "../../components/Button";
-import Card from "../../components/Card";
-import CardHeader from "../../components/CardHeader";
-import Container from "../../components/Container";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import TextArea from "../../components/TextArea";
-import TextField from "../../components/TextField";
+
+import {
+  Button,
+  Card,
+  CardHeader,
+  Container,
+  Footer,
+  Header,
+  TextArea,
+  TextField
+} from "../../components";
 
 import {
   usePostCreateMutation,

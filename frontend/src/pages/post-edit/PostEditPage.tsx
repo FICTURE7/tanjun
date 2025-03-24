@@ -1,14 +1,16 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router";
 
-import Container from "../../components/Container";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import Card from "../../components/Card";
-import CardHeader from "../../components/CardHeader";
-import Button from "../../components/Button";
-import TextArea from "../../components/TextArea";
-import TextField from "../../components/TextField";
+import {
+  Button,
+  Card,
+  CardHeader,
+  Container,
+  Footer,
+  Header,
+  TextArea,
+  TextField
+} from "../../components";
 
 import {
   usePostEditMutation,
