@@ -16,7 +16,6 @@ import { useLoginMutation } from "../../hooks";
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
   const [username, setUsername] = useState('');
-  const [usernameError, setUsernameError] = useState('');
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
@@ -24,13 +23,6 @@ const LoginPage: React.FC = () => {
 
   function handleSubmit(event: FormEvent): void {
     event.preventDefault();
-
-    const usernameRegex = /^[a-zA-Z0-9]+$/;
-
-    if (!usernameRegex.test(username)) {
-      setUsernameError("Username must contain only letters and numbers.");
-      return;
-    }
 
     const data = {
       username: username,
@@ -66,8 +58,6 @@ const LoginPage: React.FC = () => {
                 type='input'
                 label='Username'
                 value={username}
-                status={usernameError ? 'error' : 'normal'}
-                statusLabel={usernameError}
                 onChange={setUsername}
                 required />
             </div>

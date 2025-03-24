@@ -16,17 +16,64 @@ import { useRegisterMutation } from "../../hooks";
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
   const [username, setUsername] = useState('');
+  const [usernameError, setUsernameError] = useState('');
   const [password, setPassword] = useState('')
+  const [passwordError, setPasswordError] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
   const registerMutation = useRegisterMutation();
   const navigate = useNavigate();
 
+  function validateUsername() {
+    const validLength = username.length >= 1 && username.length <= 32;
+    const validChars = [...username].every(c => /[A-Za-z0-9_]/.test(c));
+
+    console.log('wtf');
+
+    if (!validLength || !validChars) {
+      setUsernameError("Must be between 1 and 32 characters long and contain only alphanumeric characters and underscore (_)");
+      return false;
+    }
+
+    setUsernameError('')
+    return true;
+  }
+
+  function validatePassword() {
+    const validLength = password.length >= 8 && password.length <= 32;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasDigit = /[0-9]/.test(password);
+    const hasSpecial = /[@$!%*?&]/.test(password);
+
+    if (validLength && hasUppercase && hasLowercase && hasDigit && hasSpecial) {
+      setPasswordError('');
+      return true;
+    }
+
+    setPasswordError("Must be between 8 and 32 characters long, contain an uppercase character, a lowercase character, a digit, and a special character ('@', '$', '!', '%', '*', '?', '&')");
+    return false;
+  }
+
+  function validateConfirmPassword(): boolean {
+    if (password && password === confirmPassword) {
+      setConfirmPasswordError('')
+      return true;
+    }
+
+    setConfirmPasswordError('Password must match Confirm Password')
+    return false;
+  }
+
   function handleSubmit(event: FormEvent): void {
     event.preventDefault();
 
-    if (password != confirmPassword) {
-      setError('Password do not match')
+    const validUsername = validateUsername();
+    const validPassword = validatePassword();
+    const validConfirmPassword = validateConfirmPassword();
+
+    if (!validUsername || !validPassword || !validConfirmPassword) {
       return;
     }
 
@@ -64,6 +111,8 @@ const LoginPage: React.FC = () => {
                 type="input"
                 label="Username"
                 value={username}
+                status={usernameError ? 'error' : 'normal'}
+                statusLabel={usernameError}
                 onChange={setUsername}
                 required />
             </div>
@@ -73,6 +122,8 @@ const LoginPage: React.FC = () => {
                 type="password"
                 label="Password"
                 value={password}
+                status={passwordError ? 'error' : 'normal'}
+                statusLabel={passwordError}
                 onChange={setPassword}
                 required />
             </div>
@@ -82,6 +133,8 @@ const LoginPage: React.FC = () => {
                 type="password"
                 label="Confirm Password"
                 value={confirmPassword}
+                status={confirmPasswordError ? 'error' : 'normal'}
+                statusLabel={confirmPasswordError}
                 onChange={setConfirmPassword}
                 required />
             </div>
