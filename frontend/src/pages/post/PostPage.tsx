@@ -6,8 +6,7 @@ import Footer from "../../components/Footer";
 import Post from "./components/Post";
 import PostNotFound from "./components/PostNotFound";
 
-import usePostQuery from "../../hooks/usePostQuery";
-import useToken from "../../hooks/useToken";
+import { usePostQuery, useToken } from "../../hooks";
 
 const PostPage: React.FC = () => {
   const { id } = useParams();

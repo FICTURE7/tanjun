@@ -11,8 +11,10 @@ import Header from "../../components/Header";
 import TextArea from "../../components/TextArea";
 import TextField from "../../components/TextField";
 
-import usePostCreateMutation from "../../hooks/usePostCreateMutation";
-import useToken from "../../hooks/useToken";
+import {
+  usePostCreateMutation,
+  useToken
+} from "../../hooks";
 
 const PostCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');

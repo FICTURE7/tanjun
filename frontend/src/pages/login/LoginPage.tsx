@@ -5,12 +5,10 @@ import Container from "../../components/Container";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Card from "../../components/Card";
+import CardHeader from "../../components/CardHeader";
 import TextField from "../../components/TextField";
 import Button from "../../components/Button";
-
-import useLoginMutation from "../../hooks/useLoginMutation";
-import CardHeader from "../../components/CardHeader";
-import useToken from "../../hooks/useToken";
+import { useLoginMutation, useToken } from "../../hooks";
 
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');

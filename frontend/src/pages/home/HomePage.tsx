@@ -3,7 +3,7 @@ import Footer from "../../components/Footer";
 import Container from "../../components/Container";
 import PostPreviewList from "./components/PostPreviewList";
 
-import usePostListQuery from "../../hooks/usePostListQuery";
+import { usePostListQuery } from "../../hooks";
 
 const Home: React.FC = () => {
   const { data: posts } = usePostListQuery();

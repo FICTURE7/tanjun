@@ -10,9 +10,11 @@ import Button from "../../components/Button";
 import TextArea from "../../components/TextArea";
 import TextField from "../../components/TextField";
 
-import usePostQuery from "../../hooks/usePostQuery";
-import usePostEditMutation from "../../hooks/usePostEditMutation";
-import useToken from "../../hooks/useToken";
+import {
+  usePostEditMutation,
+  usePostQuery,
+  useToken
+} from "../../hooks";
 
 const PostEditPage: React.FC = () => {
   const [title, setTitle] = useState('');

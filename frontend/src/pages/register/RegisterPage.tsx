@@ -9,7 +9,7 @@ import CardHeader from "../../components/CardHeader";
 import TextField from "../../components/TextField";
 import Button from "../../components/Button";
 
-import useRegisterMutation from "../../hooks/useRegisterMutation";
+import { useRegisterMutation } from "../../hooks";
 
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
