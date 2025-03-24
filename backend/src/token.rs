@@ -21,6 +21,43 @@ pub struct Token {
   pub claims: Claims,
 }
 
+impl Token {
+  pub fn create(id: i64) -> Result<String, jwt::errors::Error> {
+    let secret: String = Config::figment().extract_inner("jwt.secret")
+      .expect("Failed to get `jwt.secret` configuration. Make sure it is configured");
+
+    Token::_create_with_secret(id, secret.as_bytes())
+  }
+
+  fn _create_with_secret(id: i64, secret: &[u8]) -> Result<String, jwt::errors::Error> {
+    let exp = Utc::now()
+      .checked_add_signed(Duration::seconds(60))
+      .expect("Failed to create token expiration date.")
+      .timestamp();
+
+    let claims = Claims {
+      id: id,
+      exp: exp,
+    };
+
+    let header = jwt::Header::default();
+    let key = jwt::EncodingKey::from_secret(secret);
+    
+    jwt::encode(&header, &claims, &key)
+  }
+
+  pub fn decode(token: String) -> Result<Token, jwt::errors::Error> {
+    let secret: String = Config::figment().extract_inner("jwt.secret")
+      .expect("Failed to get `jwt.secret` configuration. Make sure it is configured");
+
+    let key = jwt::DecodingKey::from_secret(secret.as_bytes());
+    let validation = jwt::Validation::default();
+
+    jwt::decode::<Claims>(&token, &key, &validation)
+      .map(|data| Token { claims: data.claims })
+  }
+}
+
 #[rocket::async_trait]
 impl<'r> FromRequest<'r> for Token {
   type Error = Error;
@@ -29,8 +66,8 @@ impl<'r> FromRequest<'r> for Token {
     req.headers()
       .get_one("authorization")
       .or_error((Status::Unauthorized, Error::TokenNotFound))
-      .and_then(|value| match decode_token(value.to_string()) {
-        Ok(claims) => Outcome::Success(Token { claims: claims }),
+      .and_then(|value| match Token::decode(value.to_string()) {
+        Ok(token) => Outcome::Success(token),
         Err(e) => match e.kind() {
           ErrorKind::ExpiredSignature => Outcome::Error((Status::Unauthorized, Error::TokenExpired)),
           _ => Outcome::Error((Status::Unauthorized, Error::TokenInvalid))
@@ -39,45 +76,12 @@ impl<'r> FromRequest<'r> for Token {
   }
 }
 
-pub fn create_token(id: i64) -> Result<String, jwt::errors::Error> {
-  let secret: String = Config::figment().extract_inner("jwt.secret")
-    .expect("Failed to get `jwt.secret` configuration. Make sure it is configured");
-
-  _create_token_with_secret(id, secret.as_bytes())
-}
-
-fn _create_token_with_secret(id: i64, secret: &[u8]) -> Result<String, jwt::errors::Error> {
-  let exp = Utc::now()
-    .checked_add_signed(Duration::seconds(60))
-    .expect("Failed to create token expiration date.")
-    .timestamp();
-
-  let claims = Claims {
-    id: id,
-    exp: exp,
-  };
-
-  let header = jwt::Header::default();
-  let key = jwt::EncodingKey::from_secret(secret);
-  
-  jwt::encode(&header, &claims, &key)
-}
-
-pub fn decode_token(token: String) -> Result<Claims, jwt::errors::Error> {
-  let secret: String = Config::figment().extract_inner("jwt.secret")
-    .expect("Failed to get `jwt.secret` configuration. Make sure it is configured");
-
-  let key = jwt::DecodingKey::from_secret(secret.as_bytes());
-  let validation = jwt::Validation::default();
-
-  jwt::decode::<Claims>(&token, &key, &validation)
-    .map(|data| data.claims)
-}
-
 #[cfg(test)]
 mod tests {
   use super::*;
   use chrono::Utc;
+
+  use crate::errors::Error;
   
   #[test]
   fn test_create_token_success() {
@@ -85,17 +89,17 @@ mod tests {
     let user_id = 42;
 
     // Act
-    let token = create_token(user_id)
+    let token = Token::create(user_id)
       .expect("Expected token creation to succeed");
     
     // Assert
-    let claims = decode_token(token)
+    let token = Token::decode(token)
       .expect("Failed to decode token with valid secret");
     
-    assert_eq!(claims.id, user_id);
+    assert_eq!(token.claims.id, user_id);
     
     let now = Utc::now().timestamp();
-    let delta = (claims.exp - (now + 60)).abs();
+    let delta = (token.claims.exp - (now + 60)).abs();
 
     assert!(delta <= 2, "Token expiration is not within the expected range (delta: {}).", delta);
   }
@@ -104,11 +108,11 @@ mod tests {
   fn test_decode_token_invalid_secret() {
     // Arrange
     let user_id = 42;
-    let token = _create_token_with_secret(user_id, b"non-default-secret")
+    let token = Token::_create_with_secret(user_id, b"non-default-secret")
       .expect("Expected token creation to succeed");
 
     // Act
-    let decode_result = decode_token(token);
+    let decode_result = Token::decode(token);
 
     // Assert
     assert!(decode_result.is_err(), "Token decoding should fail with incorrect secret");

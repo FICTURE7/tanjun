@@ -4,7 +4,7 @@ use rocket::response::{Responder, Response, Result};
 use rocket::http::{Status, ContentType};
 use rocket::serde::json::json;
 
-#[derive(Debug)]
+#[derive(PartialEq, Debug)]
 pub enum Error {
   #[allow(dead_code)]
   NotImplemented,
