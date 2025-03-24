@@ -76,6 +76,7 @@ const PostCreatePage: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <TextField
+              id='text-title'
               label="title"
               helperLabel="The title of your blog post."
               value={title}
@@ -87,6 +88,7 @@ const PostCreatePage: React.FC = () => {
 
           <div className="mb-6">
             <TextArea
+              id='text-content'
               label="Content"
               helperLabel="The content of your blog post."
               value={content}

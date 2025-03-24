@@ -23,7 +23,13 @@ const TextField: React.FC<TextFieldProps> = ({ type, value, onChange, ...rest })
 
   return (
     <FormField {...rest}>
-      <input className={classes.join(' ')} type={type} value={value} onChange={handleChange} aria-required={rest.required} />
+      <input
+        id={rest.id}
+        className={classes.join(' ')}
+        type={type}
+        value={value}
+        onChange={handleChange}
+        aria-required={rest.required} />
     </FormField>
   );
 }

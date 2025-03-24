@@ -90,6 +90,7 @@ const PostEditPage: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <TextField
+              id='text-title'
               label="title"
               helperLabel="The new title of the blog post."
               value={title}
@@ -101,6 +102,7 @@ const PostEditPage: React.FC = () => {
 
           <div className="mb-6">
             <TextArea
+              id='text-content'
               label="Content"
               helperLabel="The new content of the blog post."
               value={content}

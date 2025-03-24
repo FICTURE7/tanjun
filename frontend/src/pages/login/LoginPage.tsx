@@ -65,6 +65,7 @@ const LoginPage: React.FC = () => {
           <div className='mb-8'>
             <div className='mb-4'>
               <TextField
+                id='text-username'
                 type='input'
                 label='Username'
                 value={username}
@@ -76,6 +77,7 @@ const LoginPage: React.FC = () => {
 
             <div>
               <TextField
+                id='text-password'
                 type='password'
                 label='Password'
                 value={password}

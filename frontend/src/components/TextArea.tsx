@@ -23,6 +23,7 @@ const TextArea: React.FC<TextAreaProps> = ({ value, onChange, ...rest }) => {
   return (
     <FormField {...rest}>
       <textarea
+        id={rest.id}
         className={classes.join(' ')}
         value={value}
         onChange={handleChange}

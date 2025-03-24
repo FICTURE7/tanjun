@@ -1,6 +1,7 @@
 import React from "react";
 
 export interface FormFieldProps {
+  id?: string;
   label: string;
   status?: 'normal' | 'error';
   statusLabel?: string;
@@ -10,6 +11,7 @@ export interface FormFieldProps {
 }
 
 const FormField: React.FC<FormFieldProps> = ({
+  id,
   label,
   helperLabel,
   status,
@@ -20,7 +22,7 @@ const FormField: React.FC<FormFieldProps> = ({
   return (
     <div>
       <div className="lowercase text-sm mb-2">
-        <label>
+        <label htmlFor={id}>
           {label}
           {required && <span className="text-red-400">*</span>}
           </label>
