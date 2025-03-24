@@ -18,9 +18,13 @@ import {
   usePostQuery
 } from "../../hooks";
 
+import { validateRequired } from "../../utils";
+
 const PostEditPage: React.FC = () => {
   const [title, setTitle] = useState('');
+  const [titleError, setTitleError] = useState('');
   const [content, setContent] = useState('');
+  const [contentError, setContentError] = useState('');
 
   const { id: rawId } = useParams();
 
@@ -48,6 +52,13 @@ const PostEditPage: React.FC = () => {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+
+    const validTitle = validateRequired(title, setTitleError);
+    const validContent = validateRequired(content, setContentError);
+
+    if (!validTitle || !validContent) {
+      return;
+    }
 
     const data = {
       token: auth!.token,
@@ -82,6 +93,8 @@ const PostEditPage: React.FC = () => {
               label="title"
               helperLabel="The new title of the blog post."
               value={title}
+              status={titleError ? 'error' : 'normal'}
+              statusLabel={titleError}
               onChange={setTitle}
               required />
           </div>
@@ -91,6 +104,8 @@ const PostEditPage: React.FC = () => {
               label="Content"
               helperLabel="The new content of the blog post."
               value={content}
+              status={contentError ? 'error' : 'normal'}
+              statusLabel={contentError}
               onChange={setContent}
               required />
           </div>

@@ -22,7 +22,11 @@ const TextArea: React.FC<TextAreaProps> = ({ value, onChange, ...rest }) => {
 
   return (
     <FormField {...rest}>
-      <textarea className={classes.join(' ')} value={value} onChange={handleChange} required={rest.required} />
+      <textarea
+        className={classes.join(' ')}
+        value={value}
+        onChange={handleChange}
+        aria-required={rest.required} />
     </FormField>
   );
 }

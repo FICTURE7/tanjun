@@ -12,6 +12,7 @@ import {
 } from "../../components";
 
 import { useLoginMutation } from "../../hooks";
+import { validateRequired } from "../../utils";
 
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
@@ -22,15 +23,6 @@ const LoginPage: React.FC = () => {
 
   const navigate = useNavigate();
   const loginMutation = useLoginMutation();
-
-  function validateRequired(value: string, setErrorValue: (value: string) => void) {
-    if (!value) {
-      setErrorValue('Required');
-      return false;
-    }
-
-    return true;
-  }
 
   function handleSubmit(event: FormEvent): void {
     event.preventDefault();
