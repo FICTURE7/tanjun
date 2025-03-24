@@ -9,6 +9,10 @@ pub enum Error {
   #[allow(dead_code)]
   NotImplemented,
 
+  TokenNotFound,
+  TokenInvalid,
+  TokenExpired,
+
   UserNotFound,
   UserAlreadyExists,
   UserLoginInvalid,
@@ -20,6 +24,10 @@ impl std::fmt::Display for Error {
   fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
     match self {
       Error::NotImplemented => write!(f, "Not implemented"),
+
+      Error::TokenNotFound => write!(f, "Token not found in request"),
+      Error::TokenInvalid => write!(f, "Token is invalid"),
+      Error::TokenExpired => write!(f, "Token is expired"),
 
       Error::UserNotFound => write!(f, "User not found"),
       Error::UserAlreadyExists => write!(f, "User already already exist"),
@@ -38,6 +46,10 @@ impl<'r> Responder<'r, 'static> for Error {
     let json = json!({ "error": self.to_string() });
     let body = json.to_string();
     let status = match self {
+      Error::TokenNotFound => Status::Unauthorized,
+      Error::TokenInvalid => Status::Unauthorized,
+      Error::TokenExpired => Status::Unauthorized,
+
       Error::UserAlreadyExists => Status::Conflict,
       Error::UserNotFound => Status::Unauthorized,
       Error::UserLoginInvalid => Status::Unauthorized,

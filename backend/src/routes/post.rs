@@ -3,6 +3,7 @@ use rocket::serde::json::Json;
 use rocket_db_pools::Connection;
 
 use crate::services;
+use crate::token::Token;
 use crate::database::Db;
 use crate::errors::Error;
 use crate::models::post::{Post, NewPost, UpdatePost};
@@ -10,8 +11,8 @@ use crate::models::post::{Post, NewPost, UpdatePost};
 type Result<T> = std::result::Result<T, Error>;
 
 #[post("/", data = "<post>")]
-pub async fn create(mut conn: Connection<Db>, post: Json<NewPost>) -> Result<Json<Post>> {
-  services::post::create(&mut **conn, 1, &post.into_inner())
+pub async fn create(mut conn: Connection<Db>, token: Token, post: Json<NewPost>) -> Result<Json<Post>> {
+  services::post::create(&mut **conn, token.claims.id, &post.into_inner())
     .await
     .map(|post| Json(post))
 }
@@ -32,14 +33,14 @@ pub async fn read_paged(mut conn: Connection<Db>) -> Result<Json<Vec<Post>>> {
 }
 
 #[put("/<id>", data = "<post>")]
-pub async fn update(mut conn: Connection<Db>, id: i64, post: Json<UpdatePost>) -> Result<Option<Json<Post>>> {
+pub async fn update(mut conn: Connection<Db>, token: Token, id: i64, post: Json<UpdatePost>) -> Result<Option<Json<Post>>> {
   services::post::update(&mut conn, id, &post.into_inner())
     .await
     .map(|post| post.map(Json))
 }
 
 #[delete("/<id>")]
-pub async fn delete(mut conn: Connection<Db>, id: i64) -> Result<Option<Json<Post>>> {
+pub async fn delete(mut conn: Connection<Db>, token: Token, id: i64) -> Result<Option<Json<Post>>> {
   services::post::delete(&mut conn, id)
     .await
     .map(|post| post.map(Json))
