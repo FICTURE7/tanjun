@@ -112,19 +112,28 @@ const PostEditPage: React.FC = () => {
               required />
           </div>
 
-          <div>
-            <div className="inline mr-2">
-              <Button
-                type="submit"
-                label="Edit" />
-            </div>
-            <div className="inline">
-              <Link to={`/post/${id}`}>
+          <div className="flex">
+            <div className="flex-grow-1">
+              <div className="inline mr-2">
                 <Button
-                  type="button"
-                  label="Cancel"
-                  variant="secondary" />
-              </Link>
+                  type="submit"
+                  label="Edit" />
+              </div>
+              <div className="inline">
+                <Link to={`/post/${id}`}>
+                  <Button
+                    type="button"
+                    label="Cancel"
+                    variant="secondary" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="inline">
+              <Button
+                type="button"
+                label="Delete"
+                variant="danger" />
             </div>
           </div>
         </form>
