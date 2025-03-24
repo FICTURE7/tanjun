@@ -18,6 +18,20 @@ fn test_create() {
 }
 
 #[test]
+fn test_create_invalid_auth() {
+  // Arrange
+  common::setup();
+  let client = common::get_client();
+
+  // Act
+  let token = "unknown token".to_string();
+  let response = create_post(&client, &token);
+
+  // Assert
+  assert_eq!(response.status(), Status::Unauthorized);
+}
+
+#[test]
 fn test_read() {
   // Arrange
   common::setup();
@@ -92,6 +106,23 @@ fn test_update() {
 }
 
 #[test]
+fn test_update_invalid_auth() {
+  // Arrange
+  common::setup();
+  let client = common::get_client();
+  let token = common::get_token(&client);
+  let response = create_post(&client, &token);
+  let id = common::get_json(response)["id"].as_i64().expect("valid id");
+
+  // Act
+  let token = "unknown token".to_string();
+  let response = update_post(&client, &token, id);
+
+  // Assert
+  assert_eq!(response.status(), Status::Unauthorized);
+}
+
+#[test]
 fn test_update_not_exist() {
   // Arrange
   common::setup();
@@ -119,6 +150,23 @@ fn test_delete() {
 
   // Assert
   assert_eq!(response.status(), Status::Ok);
+}
+
+#[test]
+fn test_delete_invalid_auth() {
+  // Arrange
+  common::setup();
+  let client = common::get_client();
+  let token = common::get_token(&client);
+  let response = create_post(&client, &token);
+  let id = common::get_json(response)["id"].as_i64().expect("valid id");
+
+  // Act
+  let token = "unknown token".to_string();
+  let response = delete_post(&client, &token, id);
+
+  // Assert
+  assert_eq!(response.status(), Status::Unauthorized);
 }
 
 #[test]
