@@ -17,7 +17,7 @@ pub fn rocket() -> _ {
   rocket::build()
     .attach(cors::Cors)
     .attach(database::Db::init())
-    .attach(database::migrations())
+    .attach(database::Migrator::init())
     .mount("/auth", routes::auth::routes())
     .mount("/post", routes::post::routes())
 }

@@ -93,7 +93,7 @@ impl<'r> Responder<'r, 'static> for Error {
   }
 }
 
-pub struct Validation {}
+pub struct Validation;
 
 impl Validation {
   pub fn validate<T: Validate>(input: &T) -> std::result::Result<(), Error> {
