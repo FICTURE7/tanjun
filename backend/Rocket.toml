@@ -2,6 +2,9 @@
 [default.databases.tanjun]
 url = "tanjun.sqlite"
 
+[default.jwt]
+duration_seconds = 600
+
 # Debug configuration
 [debug.jwt]
 secret = "jwt.secret.debug"

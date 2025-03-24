@@ -22,9 +22,9 @@ pub struct Token {
 }
 
 impl Token {
-  fn _create_with_secret(id: i64, secret: &[u8]) -> Result<String, Error> {
+  fn _create_with_secret(id: i64, duration: i64, secret: &[u8]) -> Result<String, Error> {
     let exp = Utc::now()
-      .checked_add_signed(Duration::seconds(60))
+      .checked_add_signed(Duration::seconds(duration))
       .expect("Failed to create token expiration date.")
       .timestamp();
 
@@ -41,10 +41,12 @@ impl Token {
   }
 
   pub fn create(id: i64) -> Result<String, Error> {
+    let duration: i64 = Config::figment().extract_inner("jwt.duration_seconds")
+      .expect("Failed to get \"jwt.duration_seconds\" configuration. Make sure it is configured");
     let secret: String = Config::figment().extract_inner("jwt.secret")
       .expect("Failed to get \"jwt.secret\" configuration. Make sure it is configured");
 
-    Token::_create_with_secret(id, secret.as_bytes())
+    Token::_create_with_secret(id, duration, secret.as_bytes())
   }
 
   pub fn decode(token: String) -> Result<Token, Error> {
@@ -87,6 +89,8 @@ mod tests {
   fn test_create_token_success() {
     // Arrange
     let user_id = 42;
+    let duration: i64 = Config::figment().extract_inner("jwt.duration_seconds")
+      .expect("Failed to get \"jwt.duration_seconds\" configuration. Make sure it is configured");
 
     // Act
     let token = Token::create(user_id)
@@ -99,7 +103,7 @@ mod tests {
     assert_eq!(token.claims.id, user_id);
     
     let now = Utc::now().timestamp();
-    let delta = (token.claims.exp - (now + 60)).abs();
+    let delta = (token.claims.exp - (now + duration)).abs();
 
     assert!(delta <= 2, "Token expiration is not within the expected range (delta: {}).", delta);
   }
@@ -108,7 +112,7 @@ mod tests {
   fn test_decode_token_invalid_secret() {
     // Arrange
     let user_id = 42;
-    let token = Token::_create_with_secret(user_id, b"non-default-secret")
+    let token = Token::_create_with_secret(user_id, 600, b"non-default-secret")
       .expect("Expected token creation to succeed");
 
     // Act
