@@ -11,7 +11,7 @@ import {
   TextField
 } from "../../components";
 
-import { useLoginMutation, useToken } from "../../hooks";
+import { useLoginMutation } from "../../hooks";
 
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
@@ -21,9 +21,6 @@ const LoginPage: React.FC = () => {
 
   const navigate = useNavigate();
   const loginMutation = useLoginMutation();
-  const token = useToken();
-
-  console.log(['token', token]);
 
   function handleSubmit(event: FormEvent): void {
     event.preventDefault();
