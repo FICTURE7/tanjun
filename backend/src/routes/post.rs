@@ -36,7 +36,7 @@ pub async fn read_paged(mut conn: Connection<Db>) -> Result<Json<Vec<Post>>> {
 pub async fn update(mut conn: Connection<Db>, token: Token, id: i64, post: Json<UpdatePost>) -> Result<Option<Json<Post>>> {
   match services::post::update(&mut conn, id, &post.into_inner()).await? {
     Some(post) => if post.author.id != token.claims.id {
-      Err(Error::UserForbidden)
+      Err(Error::UserAccessForbidden)
     } else {
       Ok(Some(Json(post)))
     },
@@ -48,7 +48,7 @@ pub async fn update(mut conn: Connection<Db>, token: Token, id: i64, post: Json<
 pub async fn delete(mut conn: Connection<Db>, token: Token, id: i64) -> Result<Option<Json<Post>>> {
   match services::post::delete(&mut conn, id).await? {
     Some(post) => if post.author.id != token.claims.id {
-      Err(Error::UserForbidden)
+      Err(Error::UserAccessForbidden)
     } else {
       Ok(Some(Json(post)))
     },
