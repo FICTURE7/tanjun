@@ -1,9 +1,9 @@
 import Logo from './Logo';
 import FooterLink from './FooterLink';
-import useToken from '../hooks/useToken';
+import { useAuth } from '../hooks';
 
 const Footer: React.FC = () => {
-  const token = useToken();
+  const auth = useAuth();
 
   return (
     <footer className="mt-auto text-center text-sm p-5">
@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
       <ul className="inline-flex gap-8">
         <FooterLink to="/about" label="About" />
         <FooterLink to="/privacy" label="Privacy" />
-        {token
+        {auth
           ? <FooterLink to="/logout" label="logout" />
           : <FooterLink to="/login" label="Login" />}
       </ul>

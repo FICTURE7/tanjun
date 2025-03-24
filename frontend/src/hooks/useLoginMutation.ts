@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { TOKEN_KEY } from "./useToken";
+import { AUTH_KEY } from ".";
 import { API_URL } from "../api";
+import { Auth, mapAuth } from "../models";
 
 export interface LoginData {
   username: string;
@@ -22,7 +23,7 @@ async function authLogin(data: LoginData) {
     throw new Error(result.error);
   }
 
-  return result;
+  return mapAuth(result);
 }
 
 export default function useLoginMutation() {
@@ -30,8 +31,8 @@ export default function useLoginMutation() {
 
   return useMutation({
     mutationFn: authLogin,
-    onSuccess: (data: any) => {
-      queryClient.setQueryData([TOKEN_KEY], data);
+    onSuccess: (data: Auth) => {
+      queryClient.setQueryData([AUTH_KEY], data);
     }
   });
 }

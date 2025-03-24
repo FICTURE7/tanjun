@@ -3,6 +3,7 @@ import { mapPost } from "../models/Post";
 import { API_URL } from "../api";
 
 export interface PostCreateData {
+  token: string;
   title: string;
   content: string;
 }
@@ -10,6 +11,9 @@ export interface PostCreateData {
 async function postCreate(data: PostCreateData) {
   const response = await fetch(`${API_URL}/post`, {
     method: 'POST',
+    headers: {
+      'Authorization': data.token
+    },
     body: JSON.stringify({
       title: data.title,
       content: data.content

@@ -15,8 +15,8 @@ import {
 } from "../../components";
 
 import {
+  useAuth,
   usePostCreateMutation,
-  useToken
 } from "../../hooks";
 
 const PostCreatePage: React.FC = () => {
@@ -25,9 +25,9 @@ const PostCreatePage: React.FC = () => {
 
   const postCreateMutation = usePostCreateMutation();
   const navigate = useNavigate();
-  const token = useToken();
+  const auth = useAuth();
 
-  if (!token) {
+  if (!auth) {
     return <Navigate to="/login" replace />
   }
 
@@ -35,12 +35,14 @@ const PostCreatePage: React.FC = () => {
     event.preventDefault();
 
     const data = {
+      token: auth!.token,
       title: title,
       content: content
     };
 
     const options = {
       onError(error: Error) {
+        // TODO: Implement toast.
         alert(`error: ${error.message}`);
       },
       onSuccess(post: Post) {

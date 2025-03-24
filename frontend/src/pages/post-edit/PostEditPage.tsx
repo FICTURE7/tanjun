@@ -13,9 +13,9 @@ import {
 } from "../../components";
 
 import {
+  useAuth,
   usePostEditMutation,
-  usePostQuery,
-  useToken
+  usePostQuery
 } from "../../hooks";
 
 const PostEditPage: React.FC = () => {
@@ -31,11 +31,11 @@ const PostEditPage: React.FC = () => {
 
   const id = parseInt(rawId);
   const { data } = usePostQuery({ id: id });
-  const { mutate: postEditMutate } = usePostEditMutation(id);
+  const postEditMutation = usePostEditMutation(id);
   const navigate = useNavigate();
-  const token = useToken();
+  const auth = useAuth();
 
-  if (!token) {
+  if (!auth) {
     return <Navigate to="/login" replace />
   }
 
@@ -50,6 +50,7 @@ const PostEditPage: React.FC = () => {
     event.preventDefault();
 
     const data = {
+      token: auth!.token,
       title: title,
       content: content
     };
@@ -63,7 +64,7 @@ const PostEditPage: React.FC = () => {
       }
     };
 
-    postEditMutate(data, options);
+    postEditMutation.mutate(data, options);
   }
 
   return (

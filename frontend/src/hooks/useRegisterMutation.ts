@@ -1,5 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AUTH_KEY } from ".";
 import { API_URL } from "../api";
+import { Auth, mapAuth } from "../models";
 
 export interface RegisterData {
   username: string;
@@ -21,11 +23,16 @@ async function authRegister(data: RegisterData) {
     throw new Error(result.error);
   }
 
-  return result;
+  return mapAuth(result);
 }
 
 export default function useRegisterMutation() {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: authRegister
+    mutationFn: authRegister,
+    onSuccess: (data: Auth) => {
+      queryClient.setQueryData([AUTH_KEY], data);
+    }
   })
 }
