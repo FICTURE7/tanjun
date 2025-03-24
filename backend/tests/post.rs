@@ -6,7 +6,6 @@ use rocket::local::blocking::{Client, LocalResponse};
 #[test]
 fn test_create() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let token = common::get_token(&client, "test_user");
 
@@ -20,7 +19,6 @@ fn test_create() {
 #[test]
 fn test_create_invalid_auth() {
   // Arrange
-  common::setup();
   let client = common::get_client();
 
   // Act
@@ -34,7 +32,6 @@ fn test_create_invalid_auth() {
 #[test]
 fn test_read() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let token = common::get_token(&client, "test_user");
   let response = create_post(&client, &token);
@@ -50,7 +47,6 @@ fn test_read() {
 #[test]
 fn test_read_all() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let token = common::get_token(&client, "test_user");
   for _ in 0..5 {
@@ -74,7 +70,6 @@ fn test_read_all() {
 #[test]
 fn test_read_not_exist() {
   // Arrange
-  common::setup();
   let client = common::get_client();
 
   // Act
@@ -87,7 +82,6 @@ fn test_read_not_exist() {
 #[test]
 fn test_update() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let token = common::get_token(&client, "test_user");
   let response = create_post(&client, &token);
@@ -108,7 +102,6 @@ fn test_update() {
 #[test]
 fn test_update_invalid_auth() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let token = common::get_token(&client, "test_user");
   let response = create_post(&client, &token);
@@ -125,7 +118,6 @@ fn test_update_invalid_auth() {
 #[test]
 fn test_update_forbidden_auth() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let author_token = common::get_token(&client, "test_user");
   let updater_token = common::get_token(&client, "update_user");
@@ -142,7 +134,6 @@ fn test_update_forbidden_auth() {
 #[test]
 fn test_update_not_exist() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let token = common::get_token(&client, "test_user");
 
@@ -156,7 +147,6 @@ fn test_update_not_exist() {
 #[test]
 fn test_delete() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let token = common::get_token(&client, "test_user");
   let response = create_post(&client, &token);
@@ -172,7 +162,6 @@ fn test_delete() {
 #[test]
 fn test_delete_invalid_auth() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let token = common::get_token(&client, "test_user");
   let response = create_post(&client, &token);
@@ -189,7 +178,6 @@ fn test_delete_invalid_auth() {
 #[test]
 fn test_delete_forbidden_auth() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let author_token = common::get_token(&client, "test_user");
   let updater_token = common::get_token(&client, "update_user");
@@ -206,7 +194,6 @@ fn test_delete_forbidden_auth() {
 #[test]
 fn test_delete_not_exist() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let token = common::get_token(&client, "test_user");
 

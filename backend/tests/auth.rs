@@ -6,7 +6,6 @@ use rocket::local::blocking::{Client, LocalResponse};
 #[test]
 fn test_register() {
   // Arrange
-  common::setup();
   let client = common::get_client();
 
   // Act
@@ -28,7 +27,6 @@ fn test_register() {
 #[test]
 fn test_register_already_exist() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let _ = register_user(&client);
 
@@ -42,7 +40,6 @@ fn test_register_already_exist() {
 #[test]
 fn test_login_valid_password() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let _ = register_user(&client);
 
@@ -56,7 +53,6 @@ fn test_login_valid_password() {
 #[test]
 fn test_login_invalid_password() {
   // Arrange
-  common::setup();
   let client = common::get_client();
   let _ = register_user(&client);
 
@@ -72,7 +68,6 @@ fn test_login_invalid_password() {
 #[test]
 fn test_login_invalid_user() {
   // Arrange
-  common::setup();
   let client = common::get_client();
 
   // Act

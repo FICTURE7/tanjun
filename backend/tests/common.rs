@@ -1,19 +1,41 @@
 #![allow(unused)]
 
 use tanjun_backend;
+use tanjun_backend::Db;
 
-use std::fs::remove_file;
 use rocket::Config;
+use rocket::fairing::AdHoc;
 use rocket::serde::json::serde_json;
 use rocket::local::blocking::{Client, LocalResponse};
 
-pub fn setup() {
-  let url: String = Config::figment().extract_inner("databases.tanjun.url").unwrap();
-  let _ = remove_file(url);
-}
+use rocket_db_pools::Database;
 
 pub fn get_client() -> Client {
-  Client::tracked(tanjun_backend::rocket()).expect("valid rocket instance")
+  let rocket = tanjun_backend::rocket()
+    .attach(AdHoc::try_on_ignite("[Test] Database Clean Up", |rocket| async {
+      match Db::fetch(&rocket) {
+        Some(db) => {
+          let query = sqlx::query(
+            r#"
+            DELETE FROM posts;
+            DELETE FROM users;
+            "#)
+            .execute(&**db)
+            .await;
+          
+          match query {
+            Ok(_) => Ok(rocket),
+            Err(e) => {
+              rocket::error!("Failed to clean up database: {}", e);
+              Err(rocket)
+            }
+          }
+        },
+        None => Err(rocket)
+      }
+    }));
+
+  Client::tracked(rocket).expect("valid rocket instance")
 }
 
 pub fn get_json(response: LocalResponse) -> serde_json::Value {
