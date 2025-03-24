@@ -1,4 +1,4 @@
-import Post from "../../../models/Post";
+import { Post } from "../../../models";
 import PostPreview from "./PostPreview";
 import PostPreviewEmpty from "./PostPreviewEmpty";
 import Toolbar from "./Toolbar";

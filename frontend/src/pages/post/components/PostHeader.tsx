@@ -2,7 +2,7 @@ import React from "react";
 import { BsPencilSquare } from "react-icons/bs";
 import { Link } from "react-router";
 
-import Post from "../../../models/Post";
+import { Post } from "../../../models";
 
 export interface PostHeaderProps {
   post: Post

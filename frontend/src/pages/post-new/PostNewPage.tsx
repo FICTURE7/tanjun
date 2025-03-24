@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router";
 
-import Post from "../../models/Post";
+import { Post } from "../../models";
 
 import {
   Button,

@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 
-import Post from '../../../models/Post';
 import { Card } from '../../../components';
+import { Post } from '../../../models';
 
 export interface PostProps {
   post: Post;

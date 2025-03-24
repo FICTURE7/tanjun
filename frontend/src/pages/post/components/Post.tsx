@@ -1,5 +1,6 @@
+import { type Post } from "../../../models";
+
 import Card from "../../../components/Card";
-import type Post from "../../../models/Post";
 import PostFooter from "./PostFooter";
 import PostHeader from "./PostHeader";
 
