@@ -1,12 +1,14 @@
 # Default configuration
-
 [default.databases.tanjun]
 url = "tanjun.sqlite"
 
-# Test configuration
+# Debug configuration
+[debug.jwt]
+secret = "jwt.secret.debug"
 
-[test]
-log_level = "debug"
+# Test configuration
+[test.jwt]
+secret = "jwt.secret.test"
 
 [test.databases.tanjun]
 url = "tanjun-test.sqlite"

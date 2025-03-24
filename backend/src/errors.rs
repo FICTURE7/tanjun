@@ -8,9 +8,11 @@ use rocket::serde::json::json;
 pub enum Error {
   #[allow(dead_code)]
   NotImplemented,
+
   UserNotFound,
   UserAlreadyExists,
   UserLoginInvalid,
+
   Database(String),
 }
 
@@ -18,9 +20,11 @@ impl std::fmt::Display for Error {
   fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
     match self {
       Error::NotImplemented => write!(f, "Not implemented"),
+
       Error::UserNotFound => write!(f, "User not found"),
       Error::UserAlreadyExists => write!(f, "User already already exist"),
       Error::UserLoginInvalid => write!(f, "Login invalid"),
+
       Error::Database(e) => write!(f, "Database error: {}", e),
     }
   }
