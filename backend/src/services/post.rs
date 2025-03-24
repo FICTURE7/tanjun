@@ -1,5 +1,6 @@
 use crate::sqlx::{self, Row, SqliteConnection};
-use crate::models::{User, Post, NewPost, UpdatePost};
+use crate::models::user::User;
+use crate::models::post::{Post, NewPost, UpdatePost};
 use crate::errors::Error;
 
 pub async fn create(conn: &mut SqliteConnection, author_id: i64, post: &NewPost) -> Result<Post, Error> {

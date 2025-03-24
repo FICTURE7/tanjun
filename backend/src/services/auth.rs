@@ -2,7 +2,7 @@ use rand::Rng;
 use sha2::{Sha256, Digest};
 
 use crate::sqlx::{self, Row, SqliteConnection};
-use crate::models::{User, RegisterUser, LoginUser};
+use crate::models::user::{User, RegisterUser, LoginUser};
 use crate::errors::Error;
 
 pub async fn register(conn: &mut SqliteConnection, register: &RegisterUser) -> Result<User, Error> {

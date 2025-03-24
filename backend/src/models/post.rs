@@ -1,23 +1,7 @@
-use chrono::{DateTime, Utc};
 use rocket::serde::{Serialize, Deserialize};
+use chrono::{DateTime, Utc};
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct User {
-  pub id: i64,
-  pub username: String,
-}
-
-#[derive(Clone, Debug, Deserialize)]
-pub struct RegisterUser {
-  pub username: String,
-  pub password: String,
-}
-
-#[derive(Clone, Debug, Deserialize)]
-pub struct LoginUser {
-  pub username: String,
-  pub password: String,
-}
+use crate::models::user::User;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Post {

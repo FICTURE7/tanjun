@@ -5,7 +5,7 @@ use rocket_db_pools::Connection;
 use crate::services;
 use crate::database::Db;
 use crate::errors::Error;
-use crate::models::{User, RegisterUser, LoginUser};
+use crate::models::user::{User, RegisterUser, LoginUser};
 
 type Result<T> = std::result::Result<T, Error>;
 
