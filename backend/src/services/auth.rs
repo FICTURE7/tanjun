@@ -36,11 +36,11 @@ pub async fn login(conn: &mut SqliteConnection, login: &LoginUser) -> Result<Use
   let actual_hash = hash::generate_hash(&login.password, &salt);
 
   if hash != actual_hash {
-    return Err(Error::UserLoginInvalid);
+    Err(Error::UserLoginInvalid)
+  } else {
+    Ok(User {
+      id: row.get(0),
+      username: row.get(1),
+    })
   }
-
-  Ok(User {
-    id: row.get(0),
-    username: row.get(1),
-  })
 }

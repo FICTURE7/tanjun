@@ -8,7 +8,7 @@ fn test_create() {
   // Arrange
   common::setup();
   let client = common::get_client();
-  let token = common::get_token(&client);
+  let token = common::get_token(&client, "test_user");
 
   // Act
   let response = create_post(&client, &token);
@@ -36,7 +36,7 @@ fn test_read() {
   // Arrange
   common::setup();
   let client = common::get_client();
-  let token = common::get_token(&client);
+  let token = common::get_token(&client, "test_user");
   let response = create_post(&client, &token);
   let id = common::get_json(response)["id"].as_i64().expect("valid id");
 
@@ -52,7 +52,7 @@ fn test_read_all() {
   // Arrange
   common::setup();
   let client = common::get_client();
-  let token = common::get_token(&client);
+  let token = common::get_token(&client, "test_user");
   for _ in 0..5 {
     let response = create_post(&client, &token);
 
@@ -89,7 +89,7 @@ fn test_update() {
   // Arrange
   common::setup();
   let client = common::get_client();
-  let token = common::get_token(&client);
+  let token = common::get_token(&client, "test_user");
   let response = create_post(&client, &token);
   let id = common::get_json(response)["id"].as_i64().expect("valid id");
 
@@ -110,7 +110,7 @@ fn test_update_invalid_auth() {
   // Arrange
   common::setup();
   let client = common::get_client();
-  let token = common::get_token(&client);
+  let token = common::get_token(&client, "test_user");
   let response = create_post(&client, &token);
   let id = common::get_json(response)["id"].as_i64().expect("valid id");
 
@@ -123,11 +123,28 @@ fn test_update_invalid_auth() {
 }
 
 #[test]
+fn test_update_forbidden_auth() {
+  // Arrange
+  common::setup();
+  let client = common::get_client();
+  let author_token = common::get_token(&client, "test_user");
+  let updater_token = common::get_token(&client, "update_user");
+  let response = create_post(&client, &author_token);
+  let id = common::get_json(response)["id"].as_i64().expect("valid id");
+
+  // Act
+  let response = update_post(&client, &updater_token , id);
+
+  // Assert
+  assert_eq!(response.status(), Status::Forbidden);
+}
+
+#[test]
 fn test_update_not_exist() {
   // Arrange
   common::setup();
   let client = common::get_client();
-  let token = common::get_token(&client);
+  let token = common::get_token(&client, "test_user");
 
   // Act
   let response = update_post(&client, &token, 0);
@@ -141,7 +158,7 @@ fn test_delete() {
   // Arrange
   common::setup();
   let client = common::get_client();
-  let token = common::get_token(&client);
+  let token = common::get_token(&client, "test_user");
   let response = create_post(&client, &token);
   let id = common::get_json(response)["id"].as_i64().expect("valid id");
 
@@ -157,7 +174,7 @@ fn test_delete_invalid_auth() {
   // Arrange
   common::setup();
   let client = common::get_client();
-  let token = common::get_token(&client);
+  let token = common::get_token(&client, "test_user");
   let response = create_post(&client, &token);
   let id = common::get_json(response)["id"].as_i64().expect("valid id");
 
@@ -170,11 +187,28 @@ fn test_delete_invalid_auth() {
 }
 
 #[test]
+fn test_delete_forbidden_auth() {
+  // Arrange
+  common::setup();
+  let client = common::get_client();
+  let author_token = common::get_token(&client, "test_user");
+  let updater_token = common::get_token(&client, "update_user");
+  let response = create_post(&client, &author_token);
+  let id = common::get_json(response)["id"].as_i64().expect("valid id");
+
+  // Act
+  let response = delete_post(&client, &updater_token , id);
+
+  // Assert
+  assert_eq!(response.status(), Status::Forbidden);
+}
+
+#[test]
 fn test_delete_not_exist() {
   // Arrange
   common::setup();
   let client = common::get_client();
-  let token = common::get_token(&client);
+  let token = common::get_token(&client, "test_user");
 
   // Act
   let response = delete_post(&client, &token, 0);

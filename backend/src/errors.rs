@@ -14,6 +14,7 @@ pub enum Error {
   TokenInvalid,
   TokenExpired,
 
+  UserForbidden,
   UserNotFound,
   UserAlreadyExists,
   UserLoginInvalid,
@@ -31,6 +32,7 @@ impl std::fmt::Display for Error {
       Error::TokenInvalid => write!(f, "Token is invalid"),
       Error::TokenExpired => write!(f, "Token is expired"),
 
+      Error::UserForbidden => write!(f, "User not allowed to perform action"),
       Error::UserNotFound => write!(f, "User not found"),
       Error::UserAlreadyExists => write!(f, "User already already exist"),
       Error::UserLoginInvalid => write!(f, "Login invalid"),
@@ -52,8 +54,9 @@ impl<'r> Responder<'r, 'static> for Error {
       Error::TokenInvalid => Status::Unauthorized,
       Error::TokenExpired => Status::Unauthorized,
 
-      Error::UserAlreadyExists => Status::Conflict,
+      Error::UserForbidden => Status::Forbidden,
       Error::UserNotFound => Status::Unauthorized,
+      Error::UserAlreadyExists => Status::Conflict,
       Error::UserLoginInvalid => Status::Unauthorized,
 
       _ => Status::InternalServerError

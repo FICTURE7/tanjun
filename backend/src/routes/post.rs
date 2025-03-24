@@ -34,16 +34,26 @@ pub async fn read_paged(mut conn: Connection<Db>) -> Result<Json<Vec<Post>>> {
 
 #[put("/<id>", data = "<post>")]
 pub async fn update(mut conn: Connection<Db>, token: Token, id: i64, post: Json<UpdatePost>) -> Result<Option<Json<Post>>> {
-  services::post::update(&mut conn, id, &post.into_inner())
-    .await
-    .map(|post| post.map(Json))
+  match services::post::update(&mut conn, id, &post.into_inner()).await? {
+    Some(post) => if post.author.id != token.claims.id {
+      Err(Error::UserForbidden)
+    } else {
+      Ok(Some(Json(post)))
+    },
+    None => Ok(None),
+  }
 }
 
 #[delete("/<id>")]
 pub async fn delete(mut conn: Connection<Db>, token: Token, id: i64) -> Result<Option<Json<Post>>> {
-  services::post::delete(&mut conn, id)
-    .await
-    .map(|post| post.map(Json))
+  match services::post::delete(&mut conn, id).await? {
+    Some(post) => if post.author.id != token.claims.id {
+      Err(Error::UserForbidden)
+    } else {
+      Ok(Some(Json(post)))
+    },
+    None => Ok(None)
+  }
 }
 
 pub fn routes() -> Vec<Route> {
