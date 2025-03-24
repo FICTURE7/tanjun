@@ -1,5 +1,6 @@
+use sqlx::{Row, SqliteConnection};
+
 use crate::hash;
-use crate::sqlx::{self, Row, SqliteConnection};
 use crate::models::user::{User, RegisterUser, LoginUser};
 use crate::errors::Error;
 

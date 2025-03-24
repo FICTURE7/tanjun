@@ -1,4 +1,5 @@
-use crate::sqlx::{self, Row, SqliteConnection};
+use sqlx::{Row, SqliteConnection};
+
 use crate::models::user::User;
 use crate::models::post::{Post, NewPost, UpdatePost};
 use crate::errors::Error;
