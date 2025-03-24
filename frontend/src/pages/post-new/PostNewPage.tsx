@@ -19,9 +19,13 @@ import {
   usePostCreateMutation,
 } from "../../hooks";
 
+import { validateRequired } from "../../utils";
+
 const PostCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
+  const [titleError, setTitleError] = useState('');
   const [content, setContent] = useState('');
+  const [contentError, setContentError] = useState('');
 
   const postCreateMutation = usePostCreateMutation();
   const navigate = useNavigate();
@@ -33,6 +37,13 @@ const PostCreatePage: React.FC = () => {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const validTitle = validateRequired(title, setTitleError);
+    const validContent = validateRequired(content, setContentError);
+
+    if (!validTitle || !validContent) {
+      return;
+    }
 
     const data = {
       token: auth!.token,
@@ -68,6 +79,8 @@ const PostCreatePage: React.FC = () => {
               label="title"
               helperLabel="The title of your blog post."
               value={title}
+              status={titleError ? 'error' : 'normal'}
+              statusLabel={titleError}
               onChange={setTitle}
               required />
           </div>
@@ -77,6 +90,8 @@ const PostCreatePage: React.FC = () => {
               label="Content"
               helperLabel="The content of your blog post."
               value={content}
+              status={contentError ? 'error' : 'normal'}
+              statusLabel={contentError}
               onChange={setContent}
               required />
           </div>
