@@ -17,7 +17,7 @@ pub enum Error {
   UserForbidden,
   UserNotFound,
   UserAlreadyExists,
-  UserLoginInvalid,
+  UserCredentialsInvalid,
 
   Database(String),
 }
@@ -35,7 +35,7 @@ impl std::fmt::Display for Error {
       Error::UserForbidden => write!(f, "User not allowed to perform action"),
       Error::UserNotFound => write!(f, "User not found"),
       Error::UserAlreadyExists => write!(f, "User already already exist"),
-      Error::UserLoginInvalid => write!(f, "Login invalid"),
+      Error::UserCredentialsInvalid => write!(f, "User login credentials invalid"),
 
       Error::Database(e) => write!(f, "Database error: {}", e),
     }
@@ -57,7 +57,7 @@ impl<'r> Responder<'r, 'static> for Error {
       Error::UserForbidden => Status::Forbidden,
       Error::UserNotFound => Status::Unauthorized,
       Error::UserAlreadyExists => Status::Conflict,
-      Error::UserLoginInvalid => Status::Unauthorized,
+      Error::UserCredentialsInvalid => Status::Unauthorized,
 
       _ => Status::InternalServerError
     };
