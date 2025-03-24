@@ -1,14 +1,20 @@
-use std::io::Cursor;
-use rocket::Request;
+use std::io::{Cursor};
+
+use rocket::{Request};
 use rocket::response::{Responder, Response, Result};
 use rocket::http::{Status, ContentType};
-use rocket::serde::json::json;
+use rocket::serde::json::{json};
+
+use validator::{Validate, ValidationErrors};
 
 #[derive(PartialEq, Debug)]
 pub enum Error {
   #[allow(dead_code)]
   NotImplemented,
   Internal(String),
+  Database(String),
+
+  Validation(ValidationErrors),
 
   TokenNotFound,
   TokenInvalid,
@@ -18,8 +24,6 @@ pub enum Error {
   UserNotFound,
   UserAlreadyExists,
   UserCredentialsInvalid,
-
-  Database(String),
 }
 
 impl std::fmt::Display for Error {
@@ -27,6 +31,10 @@ impl std::fmt::Display for Error {
     match self {
       Error::NotImplemented => write!(f, "Not implemented"),
       Error::Internal(e) => write!(f, "Internal error: {}", e),
+      Error::Database(e) => write!(f, "Database error: {}", e),
+
+      // TODO: Properly format the error message based on the errors in `e`.
+      Error::Validation(e) => write!(f, "Validation error: {}", e),
 
       Error::TokenNotFound => write!(f, "Token not found in request"),
       Error::TokenInvalid => write!(f, "Token is invalid"),
@@ -36,8 +44,6 @@ impl std::fmt::Display for Error {
       Error::UserNotFound => write!(f, "User not found"),
       Error::UserAlreadyExists => write!(f, "User already already exist"),
       Error::UserCredentialsInvalid => write!(f, "User login credentials invalid"),
-
-      Error::Database(e) => write!(f, "Database error: {}", e),
     }
   }
 }
@@ -50,6 +56,8 @@ impl<'r> Responder<'r, 'static> for Error {
     let json = json!({ "error": self.to_string() });
     let body = json.to_string();
     let status = match self {
+      Error::Validation(_) => Status::UnprocessableEntity,
+
       Error::TokenNotFound => Status::Unauthorized,
       Error::TokenInvalid => Status::Unauthorized,
       Error::TokenExpired => Status::Unauthorized,
@@ -67,5 +75,13 @@ impl<'r> Responder<'r, 'static> for Error {
       .status(status)
       .sized_body(body.len(), Cursor::new(body))
       .ok()
+  }
+}
+
+pub struct Validation {}
+
+impl Validation {
+  pub fn validate<T: Validate>(input: &T) -> std::result::Result<(), Error> {
+    input.validate().map_err(|e| Error::Validation(e))
   }
 }

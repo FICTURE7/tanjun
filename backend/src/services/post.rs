@@ -1,11 +1,13 @@
 use sqlx::{Row, SqliteConnection};
 use sqlx::sqlite::SqliteRow;
 
-use crate::models::user::User;
+use crate::models::user::{User};
 use crate::models::post::{Post, NewPost, UpdatePost};
-use crate::errors::Error;
+use crate::errors::{Error, Validation};
 
 pub async fn create(conn: &mut SqliteConnection, author_id: i64, post: &NewPost) -> Result<Post, Error> {
+  Validation::validate(post)?;
+
   sqlx::query(r#"
     INSERT INTO posts (title, content, author_id, created_at)
     VALUES (?, ?, ?, current_timestamp);
@@ -73,6 +75,8 @@ pub async fn read_paged(conn: &mut SqliteConnection) -> Result<Vec<Post>, Error>
 }
 
 pub async fn update(conn: &mut SqliteConnection, id: i64, post: &UpdatePost) -> Result<Option<Post>, Error> {
+  Validation::validate(post)?;
+
   sqlx::query(r#"
     UPDATE posts
     SET title = ?, content = ?, updated_at = current_timestamp

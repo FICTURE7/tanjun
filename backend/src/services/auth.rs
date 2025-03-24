@@ -2,9 +2,11 @@ use sqlx::{Row, SqliteConnection};
 
 use crate::hash;
 use crate::models::user::{User, RegisterUser, LoginUser};
-use crate::errors::Error;
+use crate::errors::{Error, Validation};
 
 pub async fn register(conn: &mut SqliteConnection, register: &RegisterUser) -> Result<User, Error> {
+  Validation::validate(register)?;
+
   let salt = hash::generate_salt();
   let hash = hash::generate_hash(&register.password, &salt);
 
@@ -25,6 +27,8 @@ pub async fn register(conn: &mut SqliteConnection, register: &RegisterUser) -> R
 }
 
 pub async fn login(conn: &mut SqliteConnection, login: &LoginUser) -> Result<User, Error> {
+  Validation::validate(login)?;
+
   let row = sqlx::query("SELECT id, username, password_hash, password_salt FROM users WHERE username = ?")
     .bind(&login.username)
     .fetch_optional(conn)

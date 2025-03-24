@@ -79,12 +79,12 @@ fn test_login_invalid_user() {
 
 fn register_user(client: &Client) -> LocalResponse {
   client.post("/auth/register")
-    .body(r#"{"username":"test_user","password":"test"}"#)
+    .body(r#"{"username":"test_user","password":"p@Assw0rd123"}"#)
     .dispatch()
 }
 
 fn login_user(client: &Client) -> LocalResponse {
   client.post("/auth/login")
-    .body(r#"{"username":"test_user","password":"test"}"#)
+    .body(r#"{"username":"test_user","password":"p@Assw0rd123"}"#)
     .dispatch()
 }

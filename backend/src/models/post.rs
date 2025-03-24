@@ -1,9 +1,10 @@
 use rocket::serde::{Serialize, Deserialize};
 use chrono::{DateTime, Utc};
+use validator::{Validate};
 
-use crate::models::user::User;
+use crate::models::user::{User};
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize)]
 pub struct Post {
   pub id: i64,
   pub title: String,
@@ -13,14 +14,18 @@ pub struct Post {
   pub author: User,
 }
 
-#[derive(Clone, Debug, Deserialize)]
+#[derive(Debug, Validate, Deserialize)]
 pub struct NewPost {
+  #[validate(length(min=1, message=r#"must not be empty."#))]
   pub title: String,
+  #[validate(length(min=1, message=r#"must not be empty."#))]
   pub content: String,
 }
 
-#[derive(Clone, Debug, Deserialize)]
+#[derive(Debug, Validate, Deserialize)]
 pub struct UpdatePost {
+  #[validate(length(min=1, message=r#"must not be empty."#))]
   pub title: String,
+  #[validate(length(min=1, message=r#"must not be empty."#))]
   pub content: String,
 }
