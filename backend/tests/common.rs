@@ -1,4 +1,7 @@
+#![allow(unused)]
+
 use tanjun_backend;
+
 use std::fs::remove_file;
 use rocket::Config;
 use rocket::serde::json::serde_json;

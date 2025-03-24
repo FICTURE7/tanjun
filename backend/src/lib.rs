@@ -1,6 +1,7 @@
 #[macro_use] extern crate rocket;
 
 mod cors;
+mod hash;
 mod token;
 mod errors;
 mod routes;

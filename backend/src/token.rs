@@ -82,8 +82,6 @@ impl<'r> FromRequest<'r> for Token {
 mod tests {
   use super::*;
   use chrono::Utc;
-
-  use crate::errors::Error;
   
   #[test]
   fn test_create_token_success() {

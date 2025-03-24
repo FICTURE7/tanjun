@@ -1,13 +1,11 @@
-use rand::Rng;
-use sha2::{Sha256, Digest};
-
+use crate::hash;
 use crate::sqlx::{self, Row, SqliteConnection};
 use crate::models::user::{User, RegisterUser, LoginUser};
 use crate::errors::Error;
 
 pub async fn register(conn: &mut SqliteConnection, register: &RegisterUser) -> Result<User, Error> {
-  let salt = gen_salt();
-  let hash = gen_hash(&register.password, &salt);
+  let salt = hash::generate_salt();
+  let hash = hash::generate_hash(&register.password, &salt);
 
   sqlx::query("INSERT INTO users (username, password_hash, password_salt) VALUES (?, ?, ?) RETURNING id, username")
     .bind(&register.username)
@@ -35,7 +33,7 @@ pub async fn login(conn: &mut SqliteConnection, login: &LoginUser) -> Result<Use
   
   let hash: Vec<u8> = row.get(2);
   let salt: Vec<u8> = row.get(3);
-  let actual_hash = gen_hash(&login.password, &salt);
+  let actual_hash = hash::generate_hash(&login.password, &salt);
 
   if hash != actual_hash {
     return Err(Error::UserLoginInvalid);
@@ -45,14 +43,4 @@ pub async fn login(conn: &mut SqliteConnection, login: &LoginUser) -> Result<Use
     id: row.get(0),
     username: row.get(1),
   })
-}
-
-fn gen_salt() -> Vec<u8> {
-  let salt: [u8; 16] = rand::rng().random();
-  salt.to_vec()
-}
-
-fn gen_hash(password: &String, salt: &Vec<u8>) -> Vec<u8>{
-  let hash = Sha256::digest([password.as_bytes(), salt].concat());
-  hash.to_vec()
 }
