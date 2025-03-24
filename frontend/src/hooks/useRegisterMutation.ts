@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AUTH_KEY } from ".";
 import { API_URL } from "../api";
-import { Auth, mapAuth } from "../models";
+import { saveAuth } from "../storage";
+import Auth, { mapAuth } from "../models/Auth";
 
 export interface RegisterData {
   username: string;
@@ -33,6 +34,7 @@ export default function useRegisterMutation() {
     mutationFn: authRegister,
     onSuccess: (data: Auth) => {
       queryClient.setQueryData([AUTH_KEY], data);
+      saveAuth(data);
     }
   })
 }

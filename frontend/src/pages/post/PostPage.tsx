@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 
-import { usePostQuery, useToken } from "../../hooks";
+import { usePostQuery, useAuth } from "../../hooks";
 import { Container, Footer, Header } from "../../components";
 
 import Post from "./components/Post";
@@ -8,7 +8,7 @@ import PostNotFound from "./components/PostNotFound";
 
 const PostPage: React.FC = () => {
   const { id } = useParams();
-  const token = useToken();
+  const auth = useAuth();
 
   let body = undefined;
 
@@ -16,7 +16,7 @@ const PostPage: React.FC = () => {
     const { data } = usePostQuery({ id: parseInt(id) });
 
     if (data) {
-      body = <Post post={data} editable={!!token} />
+      body = <Post post={data} editable={auth?.user.id === data.author.id} />
     }
   }
 
