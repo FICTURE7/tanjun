@@ -12,12 +12,14 @@ export interface PostHeaderProps {
 const PostHeader: React.FC<PostHeaderProps> = ({ post, editable }) => {
   return (
     <div className="flex items-center ms-5 mb-8">
-      <h1 className='font-bold text-3xl flex-grow-1'>{post.title}</h1>
+      <h1 className="font-bold text-3xl flex-grow-1 text-wrap break-all">
+        {post.title}
+      </h1>
 
       {editable && (
         <Link to={`/post/edit/${post.id}`}>
-          <button className='h-16 w-16 bg-black hover:bg-gray-800 active:bg-gray-700 text-white rounded-full cursor-pointer'>
-            <BsPencilSquare className='inline text-2xl' />
+          <button className="h-16 w-16 ms-4 bg-black hover:bg-gray-800 active:bg-gray-700 text-white rounded-full cursor-pointer">
+            <BsPencilSquare className="inline text-2xl" />
           </button>
         </Link>
       )}

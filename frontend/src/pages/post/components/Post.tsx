@@ -15,7 +15,7 @@ const Post: React.FC<PostProps> = ({ post, editable }) => {
       <PostHeader post={post} editable={editable}/>
       <Card>
         <div className="mb-8">
-          <p>{post.content}</p>
+          <p className="whitespace-pre-wrap text-balance">{post.content}</p>
         </div>
 
         <PostFooter
