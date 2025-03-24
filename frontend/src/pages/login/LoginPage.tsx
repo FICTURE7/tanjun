@@ -16,13 +16,31 @@ import { useLoginMutation } from "../../hooks";
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
   const [username, setUsername] = useState('');
+  const [usernameError, setUsernameError] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const navigate = useNavigate();
   const loginMutation = useLoginMutation();
 
+  function validateRequired(value: string, setErrorValue: (value: string) => void) {
+    if (!value) {
+      setErrorValue('Required');
+      return false;
+    }
+
+    return true;
+  }
+
   function handleSubmit(event: FormEvent): void {
     event.preventDefault();
+
+    const validUsername = validateRequired(username, setUsernameError);
+    const validPassword = validateRequired(password, setPasswordError);
+
+    if (!validUsername || !validPassword) {
+      return;
+    }
 
     const data = {
       username: username,
@@ -58,6 +76,8 @@ const LoginPage: React.FC = () => {
                 type='input'
                 label='Username'
                 value={username}
+                status={usernameError ? 'error' : 'normal'}
+                statusLabel={usernameError}
                 onChange={setUsername}
                 required />
             </div>
@@ -67,6 +87,8 @@ const LoginPage: React.FC = () => {
                 type='password'
                 label='Password'
                 value={password}
+                status={passwordError ? 'error' : 'normal'}
+                statusLabel={passwordError}
                 onChange={setPassword}
                 required />
             </div>
