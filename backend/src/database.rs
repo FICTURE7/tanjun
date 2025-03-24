@@ -23,4 +23,3 @@ async fn _run_migrations(rocket: Rocket<Build>) -> Result {
 pub fn migrations() -> AdHoc {
   AdHoc::try_on_ignite("Database Migrations", _run_migrations)
 }
-  
