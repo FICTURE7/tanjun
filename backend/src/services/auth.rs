@@ -1,4 +1,5 @@
 use sqlx::{Row, SqliteConnection};
+use sqlx::sqlite::SqliteRow;
 
 use crate::hash;
 use crate::models::user::{User, RegisterUser, LoginUser};
@@ -16,10 +17,7 @@ pub async fn register(conn: &mut SqliteConnection, register: &RegisterUser) -> R
     .bind(&salt)
     .fetch_one(conn)
     .await
-    .map(|row| User {
-      id: row.get(0),
-      username: row.get(1),
-    })
+    .map(|row| map_row(&row))
     .map_err(|e| match e {
       sqlx::Error::Database(e) if e.is_unique_violation() => Error::UserAlreadyExists,
       _ => Error::Database(e.to_string()),
@@ -43,9 +41,13 @@ pub async fn login(conn: &mut SqliteConnection, login: &LoginUser) -> Result<Use
   if hash != actual_hash {
     Err(Error::UserCredentialsInvalid)
   } else {
-    Ok(User {
-      id: row.get(0),
-      username: row.get(1),
-    })
+    Ok(map_row(&row))
+  }
+}
+
+pub fn map_row(row: &SqliteRow) -> User {
+  User {
+    id: row.get(0),
+    username: row.get(1),
   }
 }
