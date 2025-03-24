@@ -16,3 +16,13 @@ pub fn get_client() -> Client {
 pub fn get_json(response: LocalResponse) -> serde_json::Value {
   serde_json::from_str(&response.into_string().unwrap()).expect("valid json")
 }
+
+pub fn get_token(client: &Client) -> String {
+  let response = client.post("/auth/register")
+    .body(r#"{"username":"test_user","password":"test"}"#)
+    .dispatch();
+  let json = get_json(response);
+  let token = json["token"].as_str().expect("valid authentication token");
+
+  token.to_string()
+}

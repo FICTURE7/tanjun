@@ -22,14 +22,7 @@ pub struct Token {
 }
 
 impl Token {
-  pub fn create(id: i64) -> Result<String, jwt::errors::Error> {
-    let secret: String = Config::figment().extract_inner("jwt.secret")
-      .expect("Failed to get `jwt.secret` configuration. Make sure it is configured");
-
-    Token::_create_with_secret(id, secret.as_bytes())
-  }
-
-  fn _create_with_secret(id: i64, secret: &[u8]) -> Result<String, jwt::errors::Error> {
+  fn _create_with_secret(id: i64, secret: &[u8]) -> Result<String, Error> {
     let exp = Utc::now()
       .checked_add_signed(Duration::seconds(60))
       .expect("Failed to create token expiration date.")
@@ -44,16 +37,28 @@ impl Token {
     let key = jwt::EncodingKey::from_secret(secret);
     
     jwt::encode(&header, &claims, &key)
+      .map_err(|_| Error::Internal("Failed to encode JWT token.".to_string()))
   }
 
-  pub fn decode(token: String) -> Result<Token, jwt::errors::Error> {
+  pub fn create(id: i64) -> Result<String, Error> {
     let secret: String = Config::figment().extract_inner("jwt.secret")
-      .expect("Failed to get `jwt.secret` configuration. Make sure it is configured");
+      .expect("Failed to get \"jwt.secret\" configuration. Make sure it is configured");
+
+    Token::_create_with_secret(id, secret.as_bytes())
+  }
+
+  pub fn decode(token: String) -> Result<Token, Error> {
+    let secret: String = Config::figment().extract_inner("jwt.secret")
+      .expect("Failed to get \"jwt.secret\" configuration. Make sure it is configured");
 
     let key = jwt::DecodingKey::from_secret(secret.as_bytes());
     let validation = jwt::Validation::default();
 
     jwt::decode::<Claims>(&token, &key, &validation)
+      .map_err(|e| match e.kind() {
+        ErrorKind::ExpiredSignature => Error::TokenExpired,
+        _ => Error::TokenInvalid,
+      })
       .map(|data| Token { claims: data.claims })
   }
 }
@@ -68,10 +73,7 @@ impl<'r> FromRequest<'r> for Token {
       .or_error((Status::Unauthorized, Error::TokenNotFound))
       .and_then(|value| match Token::decode(value.to_string()) {
         Ok(token) => Outcome::Success(token),
-        Err(e) => match e.kind() {
-          ErrorKind::ExpiredSignature => Outcome::Error((Status::Unauthorized, Error::TokenExpired)),
-          _ => Outcome::Error((Status::Unauthorized, Error::TokenInvalid))
-        }
+        Err(e) => Outcome::Error((Status::Unauthorized, e)),
       })
   }
 }

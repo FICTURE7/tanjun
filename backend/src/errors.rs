@@ -8,6 +8,7 @@ use rocket::serde::json::json;
 pub enum Error {
   #[allow(dead_code)]
   NotImplemented,
+  Internal(String),
 
   TokenNotFound,
   TokenInvalid,
@@ -24,6 +25,7 @@ impl std::fmt::Display for Error {
   fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
     match self {
       Error::NotImplemented => write!(f, "Not implemented"),
+      Error::Internal(e) => write!(f, "Internal error: {}", e),
 
       Error::TokenNotFound => write!(f, "Token not found in request"),
       Error::TokenInvalid => write!(f, "Token is invalid"),

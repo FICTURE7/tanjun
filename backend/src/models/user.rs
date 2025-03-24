@@ -17,3 +17,9 @@ pub struct LoginUser {
   pub username: String,
   pub password: String,
 }
+
+#[derive(Clone, Debug, Serialize)]
+pub struct AuthUser {
+  pub user: User,
+  pub token: String,
+}

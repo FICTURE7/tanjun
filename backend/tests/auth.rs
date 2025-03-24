@@ -16,7 +16,11 @@ fn test_register() {
   assert_eq!(response.status(), Status::Ok);
 
   let json = common::get_json(response);
-  let username = json["username"].as_str().expect("valid username");
+  let _token = json["token"]
+    .as_str().expect("token string");
+  let username = json["user"]
+    .as_object().expect("user object")["username"]
+    .as_str().expect("username string");
 
   assert_eq!(username, "test_user");
 }
@@ -47,7 +51,6 @@ fn test_login_valid_password() {
 
   // Assert
   assert_eq!(response.status(), Status::Ok);
-
 }
 
 #[test]
