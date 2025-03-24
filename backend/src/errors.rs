@@ -1,5 +1,6 @@
 use std::io::{Cursor};
 
+use rocket::{Config};
 use rocket::{Request};
 use rocket::response::{Responder, Response, Result};
 use rocket::http::{Status, ContentType};
@@ -21,9 +22,9 @@ pub enum Error {
   TokenExpired,
 
   UserForbidden,
-  UserNotFound,
   UserAlreadyExists,
-  UserCredentialsInvalid,
+  UserLoginNotFound,
+  UserLoginInvalid,
 }
 
 impl std::fmt::Display for Error {
@@ -41,9 +42,9 @@ impl std::fmt::Display for Error {
       Error::TokenExpired => write!(f, "Token is expired"),
 
       Error::UserForbidden => write!(f, "User not allowed to perform action"),
-      Error::UserNotFound => write!(f, "User not found"),
       Error::UserAlreadyExists => write!(f, "User already already exist"),
-      Error::UserCredentialsInvalid => write!(f, "User login credentials invalid"),
+      Error::UserLoginNotFound => write!(f, "User not found"),
+      Error::UserLoginInvalid => write!(f, "User login credentials invalid"),
     }
   }
 }
@@ -52,9 +53,23 @@ impl std::error::Error for Error {}
 
 impl<'r> Responder<'r, 'static> for Error {
   fn respond_to(self, _: &Request) -> Result<'static> {
-    // TODO: Provide useful information in debug mode.
-    let json = json!({ "error": self.to_string() });
+    let is_release = Config::figment().profile() == "release";
+    let message = match self {
+      // Avoid internal messages.
+      Error::NotImplemented |
+      Error::Database(_) |
+      Error::Internal(_) if is_release => "Internal error".to_string(),
+
+      // Avoid user enumeration.
+      Error::UserLoginNotFound |
+      Error::UserLoginInvalid if is_release => "Username or password invalid".to_string(),
+
+      _ => self.to_string()
+    };
+
+    let json = json!({ "error": message });
     let body = json.to_string();
+
     let status = match self {
       Error::Validation(_) => Status::UnprocessableEntity,
 
@@ -63,9 +78,9 @@ impl<'r> Responder<'r, 'static> for Error {
       Error::TokenExpired => Status::Unauthorized,
 
       Error::UserForbidden => Status::Forbidden,
-      Error::UserNotFound => Status::Unauthorized,
+      Error::UserLoginNotFound => Status::Unauthorized,
       Error::UserAlreadyExists => Status::Conflict,
-      Error::UserCredentialsInvalid => Status::Unauthorized,
+      Error::UserLoginInvalid => Status::Unauthorized,
 
       _ => Status::InternalServerError
     };

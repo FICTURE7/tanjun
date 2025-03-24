@@ -32,14 +32,14 @@ pub async fn login(conn: &mut SqliteConnection, login: &LoginUser) -> Result<Use
     .fetch_optional(conn)
     .await
     .map_err(|e| Error::Database(e.to_string()))?
-    .ok_or(Error::UserNotFound)?;
+    .ok_or(Error::UserLoginNotFound)?;
   
   let hash: Vec<u8> = row.get(2);
   let salt: Vec<u8> = row.get(3);
   let actual_hash = hash::generate_hash(&login.password, &salt);
 
   if hash != actual_hash {
-    Err(Error::UserCredentialsInvalid)
+    Err(Error::UserLoginInvalid)
   } else {
     Ok(map_row(&row))
   }
