@@ -1,32 +1,36 @@
 import { Post } from "../../../models";
 import PostPreview from "./PostPreview";
 import PostPreviewEmpty from "./PostPreviewEmpty";
-import Toolbar from "./Toolbar";
+import PostPreviewNotFound from "./PostPreviewNotFound";
 
 export interface PostPreviewListProps {
   posts?: Post[];
+  filter?: string;
 }
 
-const PostPreviewList: React.FC<PostPreviewListProps> = ({ posts }) => {
+const PostPreviewList: React.FC<PostPreviewListProps> = ({ posts, filter: search }) => {
   posts ??= [];
 
-  return (
-    <div>
-      <div className="mb-8">
-        <Toolbar />
-      </div>
+  if (posts.length === 0) {
+    return <PostPreviewEmpty />
+  }
 
-      {posts.length === 0 && <PostPreviewEmpty />}
-      {posts.length > 0 && (
-        <ul className="p-0 m-0 list-none">
-        {posts.map(post => (
-          <li className="mb-4">
-            <PostPreview key={post.id} post={post} />
-          </li>
-        ))}
-        </ul>
-      )}
-    </div>
+  const filteredPosts = search ? posts.filter(p => p.title.includes(search)) : posts;
+
+  if (filteredPosts.length === 0) {
+    return <PostPreviewNotFound />
+  }
+
+  return (
+    <>
+      <ul className="p-0 m-0 list-none">
+      {filteredPosts.map(post => (
+        <li className="mb-4">
+          <PostPreview key={post.id} post={post} />
+        </li>
+      ))}
+      </ul>
+    </>
   )
 }
 

@@ -8,9 +8,7 @@ export interface ToolbarSearchProps {
 
 const ToolbarSearchField: React.FC<ToolbarSearchProps> = ({ value, onChange }) => {
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    if (onChange) {
-      onChange(event.target.value);
-    }
+    onChange?.(event.target.value);
   }
 
   return (
