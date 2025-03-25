@@ -12,7 +12,10 @@ const PostPreview: React.FC<PostProps> = ({ post }) => {
     <Card>
       <p className='text-xs mb-4'>
         <span className='font-bold'> {post.author.username} </span>
-        • {post.createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        <span> • </span>
+        <span title={`${post.createdAt.toDateString()} ${post.createdAt.toTimeString()}`}>
+          {post.createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </span>
       </p>
       <h2 className='mb-2 lowercase font-bold text-xl overflow-ellipsis overflow-hiden whitespace-nowrap overflow-hidden'>{post.title}</h2>
       <p className='mb-4 overflow-ellipsis overflow-hiden whitespace-nowrap overflow-hidden'>{post.content}</p>
