@@ -17,17 +17,13 @@ or
 docker compose up --build --force-recreate -d
 ```
 
+The application should available at `http://localhost:8000/`
+
 > [!NOTE]
 > The frontend is built and statically served through an nginx server.
 
 ### Host
 To run the application on the host machine itself, ideally for development.
-
-In `frontend`:
-
-```bash
-npm run dev
-```
 
 In `backend`
 
@@ -35,8 +31,16 @@ In `backend`
 cargo run
 ```
 
+In `frontend`:
+
+```bash
+npm run dev
+```
+
+The application should available at address specified by Vite.js.
+
 ## Design
-tanjun is a TypeScript-based Single Page Application (SPA) powered by Vite.js, React Router, and Tailwind CSS. It backend is a RESTful API built with Rust and Rocket.rs, with authentication and authorization managed through JWT tokens.
+tanjun is a TypeScript-based Single Page Application (SPA) powered by Vite.js, React Router, and Tailwind CSS. Its backend is a RESTful API built with Rust and Rocket.rs, with authentication and authorization managed through JWT tokens. SQLite is used for persistance of server data.
 
 ## License
 
