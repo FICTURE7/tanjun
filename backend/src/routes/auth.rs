@@ -32,6 +32,17 @@ pub async fn login(mut conn: Connection<Db>, login: Json<LoginUser>) -> Result<J
   }))
 }
 
+#[post("/refresh")]
+pub async fn refresh(mut conn: Connection<Db>, token: Token) -> Result<Json<AuthUser>> {
+  let user = services::auth::refresh(&mut **conn, token.claims.id).await?;
+  let new_token = Token::create(token.claims.id)?;
+
+  Ok(Json(AuthUser {
+    user: user,
+    token: new_token,
+  }))
+}
+
 pub fn routes() -> Vec<Route> {
-  routes![register, login]
+  routes![register, login, refresh]
 }

@@ -17,7 +17,7 @@ pub async fn register(conn: &mut SqliteConnection, register: &RegisterUser) -> R
     .bind(&salt)
     .fetch_one(conn)
     .await
-    .map(|row| map_row(&row))
+    .map(|row| map_user_row(&row))
     .map_err(|e| match e {
       sqlx::Error::Database(e) if e.is_unique_violation() => Error::UserAlreadyExists,
       _ => Error::Database(e.to_string()),
@@ -41,11 +41,21 @@ pub async fn login(conn: &mut SqliteConnection, login: &LoginUser) -> Result<Use
   if hash != actual_hash {
     Err(Error::UserLoginInvalid)
   } else {
-    Ok(map_row(&row))
+    Ok(map_user_row(&row))
   }
 }
 
-pub fn map_row(row: &SqliteRow) -> User {
+pub async fn refresh(conn: &mut SqliteConnection, id: i64) -> Result<User, Error> {
+  sqlx::query("SELECT id, username, password_hash, password_salt FROM users WHERE id = ?")
+    .bind(id)
+    .fetch_optional(conn)
+    .await
+    .map_err(|e| Error::Database(e.to_string()))?
+    .ok_or(Error::UserLoginNotFound)
+    .map(|row| map_user_row(&row))
+}
+
+fn map_user_row(row: &SqliteRow) -> User {
   User {
     id: row.get(0),
     username: row.get(1),

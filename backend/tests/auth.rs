@@ -1,6 +1,6 @@
 mod common;
 
-use rocket::http::Status;
+use rocket::http::{Status, Header};
 use rocket::local::blocking::{Client, LocalResponse};
 
 #[test]
@@ -77,6 +77,19 @@ fn test_login_invalid_user() {
   assert_eq!(response.status(), Status::Unauthorized);
 }
 
+#[test]
+fn test_refresh() {
+  // Arrange
+  let client = common::get_client();
+  let token = common::get_token(&client, "test_user");
+
+  // Act
+  let response = refresh_user(&client, token);
+
+  // Assert
+  assert_eq!(response.status(), Status::Ok);
+}
+
 fn register_user(client: &Client) -> LocalResponse {
   client.post("/auth/register")
     .body(r#"{"username":"test_user","password":"p@Assw0rd123"}"#)
@@ -86,5 +99,11 @@ fn register_user(client: &Client) -> LocalResponse {
 fn login_user(client: &Client) -> LocalResponse {
   client.post("/auth/login")
     .body(r#"{"username":"test_user","password":"p@Assw0rd123"}"#)
+    .dispatch()
+}
+
+fn refresh_user(client: &Client, token: String) -> LocalResponse {
+  client.post("/auth/refresh")
+    .header(Header::new("Authorization", token))
     .dispatch()
 }
