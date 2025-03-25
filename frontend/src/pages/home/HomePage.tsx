@@ -7,7 +7,7 @@ import Toolbar from "./components/Toolbar";
 import PostPreviewList from "./components/PostPreviewList";
 
 const Home: React.FC = () => {
-  const { data: posts } = usePostListQuery();
+  const { isLoading, data: posts } = usePostListQuery();
   const [search, setSearch] = useState('')
 
   function handleSearch(value: string): void {
@@ -23,7 +23,10 @@ const Home: React.FC = () => {
       </div>
 
       <div>
-        <PostPreviewList posts={posts} filter={search} />
+        <PostPreviewList
+          isLoading={isLoading}
+          posts={posts}
+          filter={search} />
       </div>
 
       <Footer />
