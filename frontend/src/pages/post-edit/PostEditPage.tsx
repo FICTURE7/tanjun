@@ -158,7 +158,7 @@ const PostEditPage: React.FC = () => {
                 onClick={() => setConfirmOpened(true)} />
 
               <Modal title="Confirm" isOpen={confirmOpened}>
-                <p className="mb-4">Are you sure you want to delete this post?</p>
+                <p className="mb-8">Are you sure you want to delete this post?</p>
                 <div>
                   <div className="inline mr-2">
                     <Button

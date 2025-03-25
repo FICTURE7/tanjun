@@ -39,7 +39,7 @@ const Modal: React.FC<ModalProps> = ({
         <div className='bg-black text-white p-5 rounded-2xl border-2 shadow-2xl'>
           <h1 className="lowercase font-bold text-3xl mb-4">{title}</h1>
 
-          <div className="mt-4">
+          <div>
             {children}
           </div>
         </div>
