@@ -106,7 +106,7 @@ const LoginPage: React.FC = () => {
           </div>
 
           <div>
-            <Link to='/register'>
+            <Link to='/register' viewTransition>
               <Button
                 type='button'
                 variant='secondary'
