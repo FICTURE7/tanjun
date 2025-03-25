@@ -37,3 +37,7 @@ cargo run
 
 ## Design
 tanjun is a TypeScript-based Single Page Application (SPA) powered by Vite.js, React Router, and Tailwind CSS. It backend is a RESTful API built with Rust and Rocket.rs, with authentication and authorization managed through JWT tokens.
+
+## License
+
+MIT License
