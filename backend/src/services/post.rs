@@ -67,6 +67,7 @@ pub async fn read_paged(conn: &mut SqliteConnection) -> Result<Vec<Post>, Error>
       u.username as author_username
     FROM posts p
       INNER JOIN users u ON p.author_id = u.id
+    ORDER BY created_at DESC
     "#)
     .fetch_all(conn)
     .await
