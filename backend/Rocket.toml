@@ -1,17 +1,17 @@
 # Default configuration
 [default.databases.tanjun]
-url = "tanjun.sqlite"
+url = "data/tanjun.sqlite"
 
-[default.jwt]
-duration_seconds = 600
+[default]
+jwt_duration_seconds = 600
 
 # Debug configuration
-[debug.jwt]
-secret = "jwt.secret.debug"
+[debug]
+jwt_secret = "jwt.secret.debug"
 
 # Test configuration
-[test.jwt]
-secret = "jwt.secret.test"
+[test]
+jwt_secret = "jwt.secret.test"
 
 [test.databases.tanjun]
-url = "tanjun-test.sqlite"
+url = "data/tanjun-test.sqlite"

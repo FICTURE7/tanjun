@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  frontend:
+    image: tanjun/frontend
+    build:
+      context: ./frontend
+      args:
+        API_URL: http://localhost:8001
+    ports:
+      - 8000:80
+    depends_on:
+      - backend
+    networks:
+      - tanjun-network
+
+  backend:
+    image: tanjun/backend
+    build: ./backend
+    ports:
+      - 8001:8000
+    networks:
+      - tanjun-network
+    volumes:
+      - ./data:/app/data
+    environment:
+      ROCKET_PROFILE: release
+      ROCKET_JWT_SECRET: secret-key
+
+networks:
+  tanjun-network:

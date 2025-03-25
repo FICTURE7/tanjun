@@ -41,17 +41,17 @@ impl Token {
   }
 
   pub fn create(id: i64) -> Result<String, Error> {
-    let duration: i64 = Config::figment().extract_inner("jwt.duration_seconds")
-      .expect("Failed to get \"jwt.duration_seconds\" configuration. Make sure it is configured");
-    let secret: String = Config::figment().extract_inner("jwt.secret")
-      .expect("Failed to get \"jwt.secret\" configuration. Make sure it is configured");
+    let duration: i64 = Config::figment().extract_inner("jwt_duration_seconds")
+      .expect("Failed to get \"jwt_duration_seconds\" configuration. Make sure it is configured");
+    let secret: String = Config::figment().extract_inner("jwt_secret")
+      .expect("Failed to get \"jwt_secret\" configuration. Make sure it is configured");
 
     Token::_create_with_secret(id, duration, secret.as_bytes())
   }
 
   pub fn decode(token: String) -> Result<Token, Error> {
-    let secret: String = Config::figment().extract_inner("jwt.secret")
-      .expect("Failed to get \"jwt.secret\" configuration. Make sure it is configured");
+    let secret: String = Config::figment().extract_inner("jwt_secret")
+      .expect("Failed to get \"jwt_secret\" configuration. Make sure it is configured");
 
     let key = jwt::DecodingKey::from_secret(secret.as_bytes());
     let validation = jwt::Validation::default();
@@ -89,8 +89,8 @@ mod tests {
   fn test_create_token_success() {
     // Arrange
     let user_id = 42;
-    let duration: i64 = Config::figment().extract_inner("jwt.duration_seconds")
-      .expect("Failed to get \"jwt.duration_seconds\" configuration. Make sure it is configured");
+    let duration: i64 = Config::figment().extract_inner("jwt_duration_seconds")
+      .expect("Failed to get \"jwt_duration_seconds\" configuration. Make sure it is configured");
 
     // Act
     let token = Token::create(user_id)

@@ -16,8 +16,9 @@ use rocket_db_pools::Database;
 pub fn rocket() -> _ {
   rocket::build()
     .attach(cors::Cors)
+    .attach(database::PreDb::init())
     .attach(database::Db::init())
-    .attach(database::Migrator::init())
+    .attach(database::PostDb::init())
     .mount("/auth", routes::auth::routes())
     .mount("/post", routes::post::routes())
 }
