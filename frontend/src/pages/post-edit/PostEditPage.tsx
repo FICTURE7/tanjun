@@ -8,6 +8,7 @@ import {
   Container,
   Footer,
   Header,
+  Modal,
   TextArea,
   TextField
 } from "../../components";
@@ -19,8 +20,10 @@ import {
 } from "../../hooks";
 
 import { validateRequired } from "../../utils";
+import usePostDeleteMutation from "../../hooks/usePostDeleteMutation";
 
 const PostEditPage: React.FC = () => {
+  const [confirmOpened, setConfirmOpened] = useState(false);
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState('');
   const [content, setContent] = useState('');
@@ -36,6 +39,7 @@ const PostEditPage: React.FC = () => {
   const id = parseInt(rawId);
   const { data } = usePostQuery({ id: id });
   const postEditMutation = usePostEditMutation(id);
+  const postDeleteMutation = usePostDeleteMutation(id);
   const navigate = useNavigate();
   const auth = useAuth();
 
@@ -76,6 +80,23 @@ const PostEditPage: React.FC = () => {
     };
 
     postEditMutation.mutate(data, options);
+  }
+
+  function handleDelete(): void {
+    const data = {
+      token: auth!.token
+    };
+
+    const options = {
+      onSuccess() {
+        navigate('/');
+      },
+      onError() {
+        alert('Failed to mutate.')
+      }
+    };
+
+    postDeleteMutation.mutate(data, options);
   }
 
   return (
@@ -133,7 +154,27 @@ const PostEditPage: React.FC = () => {
               <Button
                 type="button"
                 label="Delete"
-                variant="danger" />
+                variant="danger"
+                onClick={() => setConfirmOpened(true)} />
+
+              <Modal title="Confirm" isOpen={confirmOpened}>
+                <p className="mb-4">Are you sure you want to delete this post?</p>
+                <div>
+                  <div className="inline mr-2">
+                    <Button
+                      type="button"
+                      label="Yes"
+                      onClick={handleDelete} />
+                  </div>
+                  <div className="inline">
+                    <Button 
+                      type="button"
+                      label="Close"
+                      variant="secondary"
+                      onClick={() => setConfirmOpened(false)} />
+                  </div>
+                </div>
+              </Modal>
             </div>
           </div>
         </form>
