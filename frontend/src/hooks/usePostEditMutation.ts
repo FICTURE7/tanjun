@@ -1,6 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
-import { mapPost } from "../models/Post";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Post, { mapPost } from "../models/Post";
 import { API_URL } from "../api";
+import { POST_KEY } from "./usePostQuery";
 
 export interface PostEditData {
   token: string;
@@ -30,7 +31,12 @@ async function postUpdate(id: number, data: PostEditData) {
 }
 
 export default function usePostEditMutation(id: number) {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: (data: PostEditData) => postUpdate(id, data)
+    mutationFn: (data: PostEditData) => postUpdate(id, data),
+    onSuccess(post: Post) {
+      queryClient.setQueryData([POST_KEY, id], post);
+    },
   })
 }
