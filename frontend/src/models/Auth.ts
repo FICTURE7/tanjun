@@ -5,7 +5,7 @@ export default interface Auth {
   token: string;
 }
 
-export function mapAuth(data: any) {
+export function mapAuth(data: any): Auth {
   return {
     user: mapUser(data.user),
     token: data.token
