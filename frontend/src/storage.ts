@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode";
 import { AUTH_KEY } from "./hooks";
 import { Auth } from "./models";
 
@@ -17,7 +18,16 @@ export function loadAuth(): Auth | undefined {
   }
   
   try { 
-    return JSON.parse(json);
+    const auth = JSON.parse(json);
+    const token = jwtDecode(auth?.token);
+
+    const nowSeconds = Date.now() / 1000;
+
+    if (token.exp! < nowSeconds + 120) {
+      return undefined
+    }
+
+    return auth;
   } catch {
     return undefined;
   }
