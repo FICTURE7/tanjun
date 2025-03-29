@@ -12,7 +12,13 @@ import {
 } from "../../components";
 
 import { useLoginMutation } from "../../hooks";
-import { validateRequired } from "../../utils";
+import { formatTitle, validateRequired } from "../../utils";
+
+export function meta() {
+  return [
+    { title: formatTitle('login') }
+  ]
+}
 
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');

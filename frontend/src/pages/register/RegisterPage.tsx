@@ -12,6 +12,13 @@ import {
 } from "../../components";
 
 import { useRegisterMutation } from "../../hooks";
+import { formatTitle } from "../../utils";
+
+export function meta() {
+  return [
+    { title: formatTitle('register') }
+  ]
+}
 
 const LoginPage: React.FC = () => {
   const [error, setError] = useState('');

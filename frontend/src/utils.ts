@@ -7,3 +7,7 @@ export function validateRequired(value: string, setErrorValue: (value: string) =
   setErrorValue('');
   return true;
 }
+
+export function formatTitle(title: string) {
+  return `tanjun • ${title}`;
+}

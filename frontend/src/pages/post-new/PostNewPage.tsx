@@ -19,7 +19,13 @@ import {
   usePostCreateMutation,
 } from "../../hooks";
 
-import { validateRequired } from "../../utils";
+import { formatTitle, validateRequired } from "../../utils";
+
+export function meta() {
+  return [
+    { title: formatTitle('new') }
+  ]
+}
 
 const PostCreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
